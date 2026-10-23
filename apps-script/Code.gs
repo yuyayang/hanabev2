@@ -9,6 +9,8 @@
  *   1. 客人送出需求（action: order）→ 新增一列、狀態「待確認」，寄信通知店家與客人
  *   2. 店家聯絡客人確認花材與金額，在「確認金額」欄填入金額、狀態改「待付款」
  *   3. 客人匯款後回報（action: payment）→ 寫入匯款後五碼，狀態改「已回報匯款」，寄信通知店家
+ *
+ * 花誌訂閱（action: subscribe / unsubscribe）→ 寫入「subscribers」分頁（沒有會自動建立）
  */
 
 const OWNER_EMAIL = 'yuyayoung@gmail.com';
@@ -30,6 +32,7 @@ function doPost(e) {
     if (body.website) return json({ok: true});          // 防機器人欄位，有填就靜默略過
     if (body.action === 'order') return json(createOrder(body));
     if (body.action === 'payment') return json(reportPayment(body));
+    if (body.action === 'subscribe' || body.action === 'unsubscribe') return json(setSubscription(body, body.action === 'subscribe'));
     return json({ok: false, error: '未知的動作'});
   } catch (err) {
     return json({ok: false, error: '系統忙碌，請稍後再試或改用 LINE 聯絡'});
@@ -100,6 +103,25 @@ function reportPayment(b) {
     return {ok: true, id: id};
   }
   return {ok: false, error: '找不到這個訂單編號'};
+}
+
+// 花誌訂閱：同一 Email 只留一列，以「狀態」欄記錄訂閱中 / 已取消
+function setSubscription(b, on) {
+  const email = clean(b.email).toLowerCase();
+  if (!isEmail(email)) return {ok: false, error: '請填寫正確的 Email'};
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('subscribers') || ss.insertSheet('subscribers');
+  if (sheet.getLastRow() === 0) sheet.appendRow(['Email', '狀態', '訂閱時間', '取消時間']);
+  const emails = sheet.getRange(1, 1, sheet.getLastRow(), 1).getValues().flat().map(v => String(v).toLowerCase());
+  const i = emails.indexOf(email);
+  if (i < 1) {
+    if (!on) return {ok: true};
+    sheet.appendRow([email, '訂閱中', now(), '']);
+  } else {
+    sheet.getRange(i + 1, 2).setValue(on ? '訂閱中' : '已取消');
+    sheet.getRange(i + 1, on ? 3 : 4).setValue(now());
+  }
+  return {ok: true};
 }
 
 // 訂單編號：HB-YYMMDD-01（同日流水號）

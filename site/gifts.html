@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>花禮推薦 · 花日和 Hanabiyori</title>
+<meta name="description" content="依用途、造型、價格挑選當季花禮。">
+<link rel="stylesheet" href="assets/tokens/fonts.css">
+<link rel="stylesheet" href="assets/tokens/colors.css">
+<link rel="stylesheet" href="assets/tokens/typography.css">
+<link rel="stylesheet" href="assets/tokens/spacing.css">
+<link rel="stylesheet" href="assets/tokens/effects.css">
+<link rel="stylesheet" href="assets/tokens/base.css">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js" defer></script>
+<script src="assets/pages.js" defer></script>
+</head>
+<body>
+<div class="page">
+
+<header class="subhead">
+  <a href="index.html" class="brand"><span class="brand__zh">花日和</span><span class="brand__en">Hanabiyori</span></a>
+  <nav class="subhead__nav">
+    <a href="map.html">花海地圖</a>
+    <a href="report.html">花海通報</a>
+    <a href="journal.html">花誌訂閱</a>
+    <a href="gifts.html" aria-current="page">花禮推薦</a>
+    <a href="about.html">關於我</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="index-label"><span>No.02</span><span class="index-label__rule"></span><span>Seasonal Gifts · 花禮推薦</span></div>
+    <h1>這個季節，送一束剛好的花</h1>
+    <p>不知道怎麼選？用標籤篩選。點進花禮看詳情，再送出訂購需求。</p>
+  </div>
+</section>
+<section class="form-wrap" id="gifts-page">
+  <div class="container">
+    <div class="filters">
+      <div class="filters__row"><span class="label">用途</span><div class="tags" data-filter="occ"></div></div>
+      <div class="filters__row"><span class="label">造型</span><div class="tags" data-filter="style"></div></div>
+      <div class="filters__row"><span class="label">價格</span><div class="tags" data-filter="price"></div></div>
+    </div>
+    <div class="list-head"><span class="label" id="gift-count"></span><a href="order.html" class="report__map">沒有喜歡的？送出客製化需求 →</a></div>
+    <div class="gift-grid" id="gift-list"></div>
+  </div>
+</section>
+
+<footer class="footer footer--slim">
+  <div class="container footer__inner">
+    <div class="footer__bottom label">
+      <span>© 2026 Hanabiyori</span>
+      <span><a href="order.html">訂購需求</a> · <a href="pay.html">匯款回報</a> · LINE @hanabiyori · IG @hanabiyori.flower</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

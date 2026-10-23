@@ -8,6 +8,7 @@
         "開幕",
         "致意"
       ],
+      "style": "盆花",
       "desc": "紅白玫瑰、藍繡球、火鶴、小向日葵 · 長盆盆花",
       "price": "",
       "img": "",
@@ -21,6 +22,7 @@
         "生日",
         "致意"
       ],
+      "style": "花籃",
       "desc": "紫洋桔梗、百合、小菊、狗尾草 · 竹籃",
       "price": "1,880",
       "img": "1WpZGzahLpMLoEOdix8ukW04q4LB4bFF2",
@@ -34,6 +36,7 @@
         "告白",
         "生日"
       ],
+      "style": "盆花",
       "desc": "鹿角蕨、常春藤 · 木板壁掛",
       "price": "2,280",
       "img": "1HhAxLmSYU1ch8PvvPqIOBRbWvMbf5N6M",
@@ -47,6 +50,7 @@
         "開幕",
         "節慶"
       ],
+      "style": "盆花",
       "desc": "燈籠果、白康乃馨、香檳玫瑰、百合 · 盆花",
       "price": "3,600",
       "img": "1NooH9OCVwS-GRkO5T6Y-efEwuO8aTW--",
@@ -60,6 +64,7 @@
         "婚禮",
         "告白"
       ],
+      "style": "花束",
       "desc": "奶茶玫瑰、康乃馨、銀葉菊",
       "price": "2,680",
       "img": "1Fcwy11nDDRw2aCyihbD46vdQehbo4po7"
@@ -72,6 +77,7 @@
         "致意",
         "節慶"
       ],
+      "style": "盆花",
       "desc": "多肉、苔球 · 盆花",
       "price": "1,280",
       "img": "1U432ic3aT-VVZbOtEP5R3i_J2yzMtsM6"
@@ -84,6 +90,7 @@
         "節慶",
         "開幕"
       ],
+      "style": "盆花",
       "desc": "針墊花、藍繡球、綠乒乓菊、蕨葉 · 長盆",
       "price": "1,580",
       "img": "1Bim1yFWUHp1C4S3Fb1oKMc2gK1zcQqZq",

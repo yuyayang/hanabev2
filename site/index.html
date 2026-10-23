@@ -12,7 +12,9 @@
 <link rel="stylesheet" href="assets/tokens/effects.css">
 <link rel="stylesheet" href="assets/tokens/base.css">
 <link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js" defer></script>
 <script src="assets/main.js" defer></script>
+<script src="assets/pages.js" defer></script>
 </head>
 <body id="top">
 <div class="page">
@@ -29,11 +31,11 @@
       <span class="brand__en">Hanabiyori</span>
     </a>
     <nav class="hero__nav">
-      <a href="#map">花海地圖</a>
-      <a href="#report">花海通報</a>
-      <a href="#journal">花誌訂閱</a>
-      <a href="#gifts">花禮推薦</a>
-      <a href="#about">關於我</a>
+      <a href="map.html">花海地圖</a>
+      <a href="report.html">花海通報</a>
+      <a href="journal.html">花誌訂閱</a>
+      <a href="gifts.html">花禮推薦</a>
+      <a href="about.html">關於我</a>
     </nav>
   </header>
 
@@ -115,7 +117,7 @@
         <h2>這個季節，送一束剛好的花</h2>
         <p>依心意挑選，點進花禮即可前往訂購系統，選日期、時段與送達方式。</p>
       </div>
-      <div class="section__actions"><a class="btn btn--primary" data-order-link href="order.html">前往訂購系統 →</a></div>
+      <div class="section__actions"><a class="btn btn--secondary" href="gifts.html">看全部花禮</a><a class="btn btn--primary" data-order-link href="order.html">前往訂購系統 →</a></div>
     </div>
     <div class="tags" id="occasions"></div>
     <div class="gift-grid" id="gift-grid"></div>
@@ -132,8 +134,8 @@
         <p>每週四更新。花海與楓紅、欒樹等季節景色，花況、最佳時段與交通，一次看完。<span class="report-updated" id="report-updated"></span></p>
       </div>
       <div class="section__actions">
-        <a class="btn btn--secondary" href="#map">花海地圖</a>
-        <a class="btn btn--ink" href="#report">所有通報 →</a>
+        <a class="btn btn--secondary" href="map.html">花海地圖</a>
+        <a class="btn btn--ink" href="report.html">所有通報 →</a>
       </div>
     </div>
 
@@ -173,9 +175,11 @@
         <span class="journal__title">每週四，收一封花海通報</span>
         <span class="journal__note">隨時可取消。</span>
       </div>
-      <form class="journal__form" id="journal-form">
+      <form class="journal__form" id="journal-form" data-journal="subscribe" novalidate>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <label class="input"><input type="email" name="email" placeholder="your@email.com" required aria-label="Email"></label>
         <button type="submit" class="btn btn--primary">訂閱</button>
+        <span class="form-msg" role="alert"></span>
       </form>
     </div>
   </div>
@@ -192,14 +196,15 @@
       </div>
       <div class="footer__col">
         <span class="label footer__label">Explore</span>
-        <a href="#map">花海地圖</a>
-        <a href="#report">花海通報</a>
-        <a href="#journal">花誌訂閱</a>
-        <a href="#gifts">花禮推薦</a>
+        <a href="map.html">花海地圖</a>
+        <a href="report.html">花海通報</a>
+        <a href="journal.html">花誌訂閱</a>
+        <a href="gifts.html">花禮推薦</a>
       </div>
       <div class="footer__col">
         <span class="label footer__label">About</span>
-        <a href="#about">關於我</a>
+        <a href="about.html">關於我</a>
+        <a href="order.html">訂購需求</a>
         <a href="pay.html">匯款回報</a>
         <a href="order.html#notes">訂購須知</a>
         <a href="order.html#notes">配送範圍</a>

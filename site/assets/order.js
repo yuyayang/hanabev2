@@ -1,7 +1,7 @@
 // 花日和 訂購需求 / 匯款回報 — 送到 Google Apps Script（apps-script/Code.gs）
 (() => {
-  // Apps Script 網頁應用程式部署網址：把 '' 換成 https://script.google.com/macros/s/…/exec（HB_ORDER_API 供測試注入）
-  const ORDER_API = window.HB_ORDER_API || '';
+  // Apps Script 網址設在 assets/config.js（HB_ORDER_API 供測試注入）
+  const ORDER_API = window.HB_ORDER_API || (window.HB_CONFIG || {}).api || '';
   const GIFTS_URL = 'data/gifts.json';
 
   const $ = (s, r = document) => r.querySelector(s);

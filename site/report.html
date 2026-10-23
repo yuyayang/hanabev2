@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>花海通報 · 花日和 Hanabiyori</title>
+<meta name="description" content="每週四更新：全台正在開的花海與季節景色，依你的位置排序。">
+<link rel="stylesheet" href="assets/tokens/fonts.css">
+<link rel="stylesheet" href="assets/tokens/colors.css">
+<link rel="stylesheet" href="assets/tokens/typography.css">
+<link rel="stylesheet" href="assets/tokens/spacing.css">
+<link rel="stylesheet" href="assets/tokens/effects.css">
+<link rel="stylesheet" href="assets/tokens/base.css">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js" defer></script>
+<script src="assets/main.js" defer></script>
+<script src="assets/pages.js" defer></script>
+</head>
+<body>
+<div class="page">
+
+<header class="subhead">
+  <a href="index.html" class="brand"><span class="brand__zh">花日和</span><span class="brand__en">Hanabiyori</span></a>
+  <nav class="subhead__nav">
+    <a href="map.html">花海地圖</a>
+    <a href="report.html" aria-current="page">花海通報</a>
+    <a href="journal.html">花誌訂閱</a>
+    <a href="gifts.html">花禮推薦</a>
+    <a href="about.html">關於我</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="index-label"><span>No.03</span><span class="index-label__rule"></span><span>Weekly Bloom Report · 花海通報</span></div>
+    <h1>本週，正在開的花海</h1>
+    <p>每週四更新。花海與楓紅、欒樹等季節景色，花況、最佳時段與交通，一次看完。</p>
+    <span class="report-updated" id="report-updated"></span>
+    <div class="section__actions"><a class="btn btn--secondary" href="map.html">在地圖上看 →</a></div>
+  </div>
+</section>
+<section class="form-wrap">
+  <div class="container">
+    <!-- 當季最近花海：依位置排序 -->
+    <div class="finder">
+      <div class="finder__text">
+        <span class="label finder__label">Near You · 離你最近的花海</span>
+        <span class="finder__status" id="finder-status" aria-live="polite">依日期挑出這個時節在開的花海，選擇出發地即可依距離排序。</span>
+      </div>
+      <div class="finder__controls">
+        <button type="button" class="btn btn--primary" id="finder-locate">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+          使用我的位置
+        </button>
+        <label class="select"><span class="sr-only">出發縣市</span>
+          <select id="finder-county"><option value="">或選擇出發縣市</option></select>
+        </label>
+      </div>
+    </div>
+
+    <div class="tags" id="report-kinds"></div>
+
+    <div class="report-group">
+      <span class="label report-group__title">本週可賞</span>
+      <div class="report-grid" id="report-grid"></div>
+    </div>
+    <div class="report-group" id="report-soon-group">
+      <span class="label report-group__title">即將登場</span>
+      <div class="report-grid" id="report-soon"></div>
+    </div>
+    <p class="report-note">花況會因天氣提前或延後；標示「花況未確認」者為依花期推估，出發前請先查官方公告。距離為直線估算。</p>
+  </div>
+</section>
+
+<footer class="footer footer--slim">
+  <div class="container footer__inner">
+    <div class="footer__bottom label">
+      <span>© 2026 Hanabiyori</span>
+      <span><a href="order.html">訂購需求</a> · <a href="pay.html">匯款回報</a> · LINE @hanabiyori · IG @hanabiyori.flower</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

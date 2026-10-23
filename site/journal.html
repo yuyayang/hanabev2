@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>花誌訂閱 · 花日和 Hanabiyori</title>
+<meta name="description" content="每週四，收一封花海通報。">
+<link rel="stylesheet" href="assets/tokens/fonts.css">
+<link rel="stylesheet" href="assets/tokens/colors.css">
+<link rel="stylesheet" href="assets/tokens/typography.css">
+<link rel="stylesheet" href="assets/tokens/spacing.css">
+<link rel="stylesheet" href="assets/tokens/effects.css">
+<link rel="stylesheet" href="assets/tokens/base.css">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/config.js" defer></script>
+<script src="assets/pages.js" defer></script>
+</head>
+<body>
+<div class="page">
+
+<header class="subhead">
+  <a href="index.html" class="brand"><span class="brand__zh">花日和</span><span class="brand__en">Hanabiyori</span></a>
+  <nav class="subhead__nav">
+    <a href="map.html">花海地圖</a>
+    <a href="report.html">花海通報</a>
+    <a href="journal.html" aria-current="page">花誌訂閱</a>
+    <a href="gifts.html">花禮推薦</a>
+    <a href="about.html">關於我</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="index-label"><span>No.04</span><span class="index-label__rule"></span><span>Flower Journal · 花誌</span></div>
+    <h1>每週四，收一封花海通報</h1>
+    <p>本週正在開的花海、季節景色，和一束當季花禮的靈感。隨時可取消。</p>
+  </div>
+</section>
+<section class="form-wrap">
+  <div class="container">
+    <div class="journal-grid">
+      <div class="journal journal--page">
+        <div class="journal__grain"></div>
+        <div class="journal__text">
+          <span class="label">Subscribe · 要收到每週花報嗎</span>
+          <span class="journal__title">留下 Email，每週四寄給你</span>
+        </div>
+        <form class="journal__form" data-journal="subscribe" novalidate>
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <label class="input"><input type="email" name="email" placeholder="your@email.com" required aria-label="Email"></label>
+          <button type="submit" class="btn btn--primary">訂閱</button>
+          <span class="form-msg" role="alert"></span>
+        </form>
+      </div>
+      <div class="journal-side">
+        <div class="fieldset">
+          <span class="label">Not now · 暫不訂閱</span>
+          <p class="detail__note">也可以直接看網站上的 <a href="report.html">花海通報</a>，每週四更新。</p>
+        </div>
+        <div class="fieldset">
+          <span class="label">Unsubscribe · 取消訂閱</span>
+          <form class="unsub" data-journal="unsubscribe" novalidate>
+            <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <label class="input"><input type="email" name="email" placeholder="your@email.com" required aria-label="要取消的 Email"></label>
+            <button type="submit" class="btn btn--secondary">取消訂閱</button>
+            <span class="form-msg" role="alert"></span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer footer--slim">
+  <div class="container footer__inner">
+    <div class="footer__bottom label">
+      <span>© 2026 Hanabiyori</span>
+      <span><a href="order.html">訂購需求</a> · <a href="pay.html">匯款回報</a> · LINE @hanabiyori · IG @hanabiyori.flower</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

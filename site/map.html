@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>花海地圖 · 花日和 Hanabiyori</title>
+<meta name="description" content="在地圖上找這個時節正在開的花海與季節景色。">
+<link rel="stylesheet" href="assets/tokens/fonts.css">
+<link rel="stylesheet" href="assets/tokens/colors.css">
+<link rel="stylesheet" href="assets/tokens/typography.css">
+<link rel="stylesheet" href="assets/tokens/spacing.css">
+<link rel="stylesheet" href="assets/tokens/effects.css">
+<link rel="stylesheet" href="assets/tokens/base.css">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+<script src="assets/vendor/leaflet/leaflet.js" defer></script>
+<script src="assets/config.js" defer></script>
+<script src="assets/pages.js" defer></script>
+</head>
+<body>
+<div class="page">
+
+<header class="subhead">
+  <a href="index.html" class="brand"><span class="brand__zh">花日和</span><span class="brand__en">Hanabiyori</span></a>
+  <nav class="subhead__nav">
+    <a href="map.html" aria-current="page">花海地圖</a>
+    <a href="report.html">花海通報</a>
+    <a href="journal.html">花誌訂閱</a>
+    <a href="gifts.html">花禮推薦</a>
+    <a href="about.html">關於我</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="index-label"><span>No.01</span><span class="index-label__rule"></span><span>Bloom Map · 花海地圖</span></div>
+    <h1>跟著地圖去看花</h1>
+    <p>依種類與花期篩選，點景點看花況、最佳時段，一鍵 Google Map 導航。</p>
+    <span class="report-updated" id="map-updated"></span>
+  </div>
+</section>
+<section class="form-wrap">
+  <div class="container">
+    <div class="filters">
+      <div class="filters__row"><span class="label">種類</span><div class="tags" data-map="kind">
+        <button type="button" class="tag" data-v="all" aria-pressed="true">全部</button>
+        <button type="button" class="tag" data-v="flower" aria-pressed="false">花海</button>
+        <button type="button" class="tag" data-v="scenery" aria-pressed="false">季節景色</button>
+      </div></div>
+      <div class="filters__row"><span class="label">花期</span><div class="tags" data-map="phase">
+        <button type="button" class="tag" data-v="all" aria-pressed="true">全部</button>
+        <button type="button" class="tag" data-v="now" aria-pressed="false">本週可賞</button>
+        <button type="button" class="tag" data-v="soon" aria-pressed="false">即將登場</button>
+      </div></div>
+    </div>
+    <div class="map-layout">
+      <div class="map-box"><div id="bloom-map" role="region" aria-label="花海地圖"></div></div>
+      <div class="map-list" id="map-list"></div>
+    </div>
+    <div class="map-legend label">
+      <span><i style="background:#5D6E58"></i>花海 · 本週</span>
+      <span><i style="background:#93705C"></i>季節景色 · 本週</span>
+      <span><i style="background:#8A8781"></i>即將登場</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer footer--slim">
+  <div class="container footer__inner">
+    <div class="footer__bottom label">
+      <span>© 2026 Hanabiyori</span>
+      <span><a href="order.html">訂購需求</a> · <a href="pay.html">匯款回報</a> · LINE @hanabiyori · IG @hanabiyori.flower</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

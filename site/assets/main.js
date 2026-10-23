@@ -6,7 +6,6 @@
     giftCount: 6,           // 3–6
     showSubscribe: true,
     orderUrl: 'order.html', // 訂購需求表單
-    subscribeUrl: '',       // 花誌訂閱表單送出網址，待提供
     // 「花日和｜今日花草」試算表（daily 分頁，由每日排程寫入）；需設為「知道連結的任何人都能檢視」
     dailySheetId: '1nlt5VMJT8ILvayvH9xGhjDgxXVbjhdU1XgJQaoxjBcU'
   };
@@ -341,51 +340,49 @@
     });
   }
 
-  // ---------- 初始化 ----------
-  $('.hero').dataset.layout = CONFIG.heroLayout === 'center' ? 'center' : 'corner';
-  $('#journal').hidden = !CONFIG.showSubscribe;
+  // ---------- 初始化（首頁與花海通報頁共用，依頁面上有的區塊啟動） ----------
+  const isHome = !!$('.hero');
   $$('[data-order-link]').forEach(a => { a.href = CONFIG.orderUrl; });
-  $('[data-bind="todayLabel"]').textContent = dateLabelOf(new Date());
+  if ($("#report-grid")) { initFinder(); loadReports(); }
 
-  renderDaily();
-  loadDailySheet();
-  renderOccasions();
-  // 首頁只放有自家照片的花禮，每次載入隨機排序
-  fetch(GIFTS_URL).then(r => r.json()).then(d => {
-    state.gifts = (d.gifts || []).filter(g => g.photo).sort(() => Math.random() - .5);
-    renderGifts();
-  }).catch(() => {});
-  initFinder();
-  loadReports();
+  if (isHome) {
+    $('.hero').dataset.layout = CONFIG.heroLayout === 'center' ? 'center' : 'corner';
+    $('#journal').hidden = !CONFIG.showSubscribe;
+    $('[data-bind="todayLabel"]').textContent = dateLabelOf(new Date());
 
-  $('#daily').addEventListener('click', openCard);
-  modal.addEventListener('click', e => { if (e.target === modal) closeCard(); });
-  modal.addEventListener('click', e => {
-    const act = e.target.closest('[data-action]');
-    if (!act) return;
-    const a = act.dataset.action;
-    if (a === 'close') closeCard();
-    else if (a === 'prev') step(-1);
-    else if (a === 'next') step(1);
-    else if (a === 'download') downloadCard();
-  });
-  document.addEventListener('keydown', e => {
-    if (modal.hidden) return;
-    if (e.key === 'Escape') closeCard();
-    else if (e.key === 'ArrowLeft') step(-1);
-    else if (e.key === 'ArrowRight') step(1);
-  });
-
-  $('#occasions').addEventListener('click', e => {
-    const t = e.target.closest('[data-occ]');
-    if (!t) return;
-    state.occ = t.dataset.occ;
+    renderDaily();
+    loadDailySheet();
     renderOccasions();
-    renderGifts();
-  });
+    // 首頁只放有自家照片的花禮，每次載入隨機排序
+    fetch(GIFTS_URL).then(r => r.json()).then(d => {
+      state.gifts = (d.gifts || []).filter(g => g.photo).sort(() => Math.random() - .5);
+      renderGifts();
+    }).catch(() => {});
 
-  $('#journal-form').addEventListener('submit', e => {
-    if (CONFIG.subscribeUrl) { e.target.action = CONFIG.subscribeUrl; e.target.method = 'post'; return; }
-    e.preventDefault();
-  });
+    $('#daily').addEventListener('click', openCard);
+    modal.addEventListener('click', e => { if (e.target === modal) closeCard(); });
+    modal.addEventListener('click', e => {
+      const act = e.target.closest('[data-action]');
+      if (!act) return;
+      const a = act.dataset.action;
+      if (a === 'close') closeCard();
+      else if (a === 'prev') step(-1);
+      else if (a === 'next') step(1);
+      else if (a === 'download') downloadCard();
+    });
+    document.addEventListener('keydown', e => {
+      if (modal.hidden) return;
+      if (e.key === 'Escape') closeCard();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
+
+    $('#occasions').addEventListener('click', e => {
+      const t = e.target.closest('[data-occ]');
+      if (!t) return;
+      state.occ = t.dataset.occ;
+      renderOccasions();
+      renderGifts();
+    });
+  }
 })();
