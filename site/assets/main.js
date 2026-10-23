@@ -21,6 +21,7 @@
     {key:'eucalyptus',name:'尤加利',en:'Eucalyptus',term:'大雪 · Winter',meaning:'恩賜、守護',note:'灰綠的圓葉帶著清涼的香氣，是一整年都在的配角，安靜地讓花更好看。',quote:'當個好配角，也是一種開花。'},
     {key:'camellia',name:'山茶',en:'Camellia',term:'冬至 · Midwinter',meaning:'理想的愛',note:'在最冷的時候開，花落時整朵落下，乾淨俐落。',quote:'冷的季節，也有人在認真地美。'}
   ];
+  // photo：去背照片（assets/img/gifts/*.webp，由 gift-photo-cutout skill 產生）；沒有時改用 img 的 Drive 縮圖
   const GIFTS = [
     {id:'g1',name:'竹青晨霧',tag:'生日',occ:['生日','致意'],desc:'尤加利、白色桔梗、芒草',price:'1,880',img:'1WpZGzahLpMLoEOdix8ukW04q4LB4bFF2'},
     {id:'g2',name:'櫻與海',tag:'告白',occ:['告白','生日'],desc:'粉玫瑰、藍星花、雪柳',price:'2,280',img:'1HhAxLmSYU1ch8PvvPqIOBRbWvMbf5N6M'},
@@ -141,7 +142,7 @@
         <div class="gift__stage">
           <div class="gift__grain"></div>
           <div class="gift__shadow"></div>
-          <img class="gift__img" src="https://drive.google.com/thumbnail?id=${esc(g.img)}&amp;sz=w1000" alt="${esc(g.name)}" loading="lazy" onerror="this.hidden=true">
+          <img class="gift__img" src="${esc(g.photo || 'https://drive.google.com/thumbnail?id=' + g.img + '&sz=w1000')}" alt="${esc(g.name)}" loading="lazy" onerror="this.hidden=true">
         </div>
         <div class="gift__body">
           <span class="label gift__tag">${esc(g.tag)}</span>
