@@ -128,14 +128,40 @@
       <div class="section__intro">
         <div class="index-label"><span>No.03</span><span class="index-label__rule"></span><span>Weekly Bloom Report · 花海通報</span></div>
         <h2>本週，正在開的花海</h2>
-        <p>每週四更新。花況、最佳時段與交通，一次看完。</p>
+        <p>每週四更新。花況、最佳時段與交通，一次看完。<span class="report-updated" id="report-updated"></span></p>
       </div>
       <div class="section__actions">
         <a class="btn btn--secondary" href="#map">花海地圖</a>
         <a class="btn btn--ink" href="#report">所有通報 →</a>
       </div>
     </div>
-    <div class="report-grid" id="report-grid"></div>
+
+    <!-- 當季最近花海：依位置排序 -->
+    <div class="finder">
+      <div class="finder__text">
+        <span class="label finder__label">Near You · 離你最近的花海</span>
+        <span class="finder__status" id="finder-status" aria-live="polite">依日期挑出這個時節在開的花海，選擇出發地即可依距離排序。</span>
+      </div>
+      <div class="finder__controls">
+        <button type="button" class="btn btn--primary" id="finder-locate">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+          使用我的位置
+        </button>
+        <label class="select"><span class="sr-only">出發縣市</span>
+          <select id="finder-county"><option value="">或選擇出發縣市</option></select>
+        </label>
+      </div>
+    </div>
+
+    <div class="report-group">
+      <span class="label report-group__title">本週可賞</span>
+      <div class="report-grid" id="report-grid"></div>
+    </div>
+    <div class="report-group" id="report-soon-group">
+      <span class="label report-group__title">即將登場</span>
+      <div class="report-grid" id="report-soon"></div>
+    </div>
+    <p class="report-note">花況會因天氣提前或延後；標示「花況未確認」者為依花期推估，出發前請先查官方公告。距離為直線估算。</p>
 
     <div id="journal" class="journal">
       <div class="journal__grain"></div>

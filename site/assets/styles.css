@@ -138,6 +138,30 @@ p{margin:0}
 .report__map,.report__map:hover{color:var(--sea-700)}
 .report__gift,.report__gift:hover{color:var(--ink-2)}
 
+.report-updated{display:block;margin-top:6px;font:var(--type-label);letter-spacing:.16em;color:var(--ink-3)}
+.report__thumb.photo-slot{background:var(--grad-mist)}
+.report-updated:empty{display:none}
+.report__badge{align-self:flex-start;font:400 10.5px/1.2 var(--font-mono);letter-spacing:.14em;padding:4px 10px;border-radius:var(--radius-pill);background:var(--leaf-100);color:var(--leaf-700)}
+.report__dist{color:var(--bamboo-700)}
+.report__tip{padding:12px 22px 0;font-size:13px;line-height:1.7;color:var(--ink-2)}
+.report__src{padding:6px 22px 14px;font:var(--type-label);letter-spacing:.12em;color:var(--ink-3)}
+.report__src a,.report__src a:hover{color:var(--ink-3);text-decoration:underline;text-underline-offset:3px}
+.report-group{display:flex;flex-direction:column;gap:16px}
+.report-group[hidden]{display:none}
+.report-group__title{color:var(--ink-2)}
+.report-note{font-size:13px;color:var(--ink-3);margin-top:-16px}
+
+/* 當季最近花海 */
+.finder{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:20px 24px;background:var(--paper-1);border:1px solid var(--line-hair)}
+.finder__text{display:flex;flex-direction:column;gap:6px;min-width:0}
+.finder__label{color:var(--bamboo-700)}
+.finder__status{font-size:14px;color:var(--ink-2)}
+.finder__controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.select{display:inline-flex;border-bottom:1px solid var(--ink-4);padding:6px 0;transition:border-color var(--dur-calm) var(--ease-breeze)}
+.select:focus-within{border-color:var(--bamboo-700)}
+.select select{border:0;outline:0;background:transparent;font:300 15px/1.4 var(--font-serif);color:var(--ink-1);letter-spacing:.06em;cursor:pointer;padding-right:4px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
 .journal{position:relative;overflow:hidden;background:var(--grad-tide);padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
 .journal[hidden]{display:none}
 .journal__grain{position:absolute;inset:0;pointer-events:none;background-image:var(--texture-grain);opacity:.3;mix-blend-mode:multiply}

@@ -29,17 +29,23 @@
     {id:'g5',name:'秋日小盆',tag:'致意',occ:['致意','節慶'],desc:'多肉、苔球 · 盆花',price:'1,280',img:'1U432ic3aT-VVZbOtEP5R3i_J2yzMtsM6'},
     {id:'g6',name:'白日長亭',tag:'節慶',occ:['節慶','開幕'],desc:'白色杭菊、棉花、松果 · 花盒',price:'1,580',img:'1Bim1yFWUHp1C4S3Fb1oKMc2gK1zcQqZq'}
   ];
-  const REPORTS = [
-    {id:'r1',place:'桃園 · 波斯菊花海',region:'北部',period:'10–12月 · 本週更新',lv:3,status:'盛開',best:'平日上午',traffic:'公車 · 停車資訊',gift:'櫻與海',img:'assets/img/report-r1.webp'},
-    {id:'r2',place:'苗栗銅鑼 · 杭菊',region:'中部',period:'11月 · 本週更新',lv:2,status:'初開',best:'清晨',traffic:'台鐵銅鑼站',gift:'白日長亭',img:'assets/img/report-r2.webp'},
-    {id:'r3',place:'台中新社 · 花海節',region:'中部',period:'11–12月 · 本週更新',lv:1,status:'含苞',best:'週末午後',traffic:'接駁車',gift:'一片楓葉',img:'assets/img/report-r3.webp'}
+  // 花海通報資料由 seasonal-flower-finder 每週更新至 data/reports.json
+  const REPORTS_URL = 'data/reports.json';
+  // 出發縣市（縣市政府所在地座標）
+  const COUNTIES = [
+    ['基隆市',25.1276,121.7392],['台北市',25.0375,121.5637],['新北市',25.0120,121.4657],['桃園市',24.9937,121.3010],
+    ['新竹市',24.8138,120.9675],['新竹縣',24.8270,121.0129],['苗栗縣',24.5602,120.8214],['台中市',24.1618,120.6469],
+    ['彰化縣',24.0758,120.5449],['南投縣',23.9022,120.6859],['雲林縣',23.6992,120.5265],['嘉義市',23.4801,120.4491],
+    ['嘉義縣',23.4588,120.2932],['台南市',22.9927,120.1848],['高雄市',22.6203,120.3121],['屏東縣',22.6828,120.4879],
+    ['宜蘭縣',24.7303,121.7631],['花蓮縣',23.9911,121.6114],['台東縣',22.7558,121.1504],['澎湖縣',23.5655,119.5663],
+    ['金門縣',24.4370,118.3186],['連江縣',26.1607,119.9512]
   ];
   const OCC = ['全部','生日','開幕','告白','致意','節慶','婚禮'];
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const state = {offset: 0, occ: '全部'};
+  const state = {offset: 0, occ: '全部', spots: [], origin: null};
 
   // ---------- 每日一花 ----------
   function flowerFor(offset) {
@@ -148,14 +154,33 @@
       </a>`).join('');
   }
 
-  // ---------- 花海通報 ----------
-  function renderReports() {
-    $('#report-grid').innerHTML = REPORTS.map(r => `
+  // ---------- 花海通報 · 當季最近花海 ----------
+  function distanceKm(a, b) {
+    const R = 6371, rad = x => x * Math.PI / 180;
+    const dLat = rad(b.lat - a.lat), dLng = rad(b.lng - a.lng);
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+  // 直線距離 × 1.25 繞行係數；前 25 km 以市區 30 km/h、之後以國道 95 km/h 估算車程
+  function driveLabel(km) {
+    const road = km * 1.25;
+    const min = Math.round(road <= 25 ? road / 30 * 60 : 50 + (road - 25) / 95 * 60);
+    if (min < 60) return '約 ' + Math.max(5, Math.round(min / 5) * 5) + ' 分鐘車程';
+    return '約 ' + (Math.round(min / 30) / 2) + ' 小時車程';
+  }
+  function mapUrl(r) {
+    const u = 'https://www.google.com/maps/dir/?api=1&destination=' + r.lat + ',' + r.lng;
+    return state.origin ? u + '&origin=' + state.origin.lat + ',' + state.origin.lng : u;
+  }
+
+  function reportCard(r) {
+    const meta = [r.region, r.county, r.km != null ? `<span class="report__dist">${esc(driveLabel(r.km))}</span>` : ''].filter(Boolean);
+    return `
       <article class="report">
         <div class="report__head">
-          <div class="report__thumb"><img src="${esc(r.img)}" alt="${esc(r.place)}" loading="lazy"></div>
+          <div class="report__thumb photo-slot">${r.img ? `<img src="${esc(r.img)}" alt="${esc(r.place)}" loading="lazy">` : ''}</div>
           <div class="report__titles">
-            <span class="label report__meta">${esc(r.region)} · ${esc(r.period)}</span>
+            <span class="label report__meta">${meta.map((m, i) => i < 2 ? esc(m) : m).join(' · ')}</span>
             <span class="report__place">${esc(r.place)}</span>
           </div>
         </div>
@@ -166,14 +191,66 @@
               <span class="report__status-text">${esc(r.status)}</span>
             </span>
           </div>
+          <div class="report__row"><span>觀賞期</span><span>${esc(r.period)}</span></div>
           <div class="report__row"><span>最佳時段</span><span>${esc(r.best)}</span></div>
-          <div class="report__row"><span>交通</span><span>${esc(r.traffic)}</span></div>
+          <div class="report__row"><span>交通</span><span>${esc(r.traffic)} · ${esc(r.ticket)}</span></div>
+        </div>
+        ${r.tip ? `<p class="report__tip">${esc(r.tip)}</p>` : ''}
+        <div class="report__src">
+          ${r.confirmed ? '' : '<span class="report__badge">花況未確認</span> '}資料 ${esc(r.dataDate)} · <a href="${esc(r.source)}" target="_blank" rel="noopener">來源</a>
         </div>
         <div class="report__foot">
-          <a class="report__map" href="#map">怎麼去 → Google Map</a>
+          <a class="report__map" href="${esc(mapUrl(r))}" target="_blank" rel="noopener">怎麼去 → Google Map</a>
           <a class="report__gift" href="#gifts">對應花禮：${esc(r.gift)}</a>
         </div>
-      </article>`).join('');
+      </article>`;
+  }
+
+  function renderReports() {
+    const list = state.spots.map(r => ({...r, km: state.origin ? distanceKm(state.origin, r) : null}));
+    if (state.origin) list.sort((a, b) => a.km - b.km);
+    const now = list.filter(r => r.phase === 'now'), soon = list.filter(r => r.phase !== 'now');
+    $('#report-grid').innerHTML = now.length ? now.map(reportCard).join('') : '<p class="report-note">本週沒有確認在開的花海。</p>';
+    $('#report-soon').innerHTML = soon.map(reportCard).join('');
+    $('#report-soon-group').hidden = !soon.length;
+  }
+
+  async function loadReports() {
+    try {
+      const res = await fetch(REPORTS_URL, {cache: 'no-cache'});
+      const data = await res.json();
+      state.spots = data.spots || [];
+      if (data.updated) $('#report-updated').textContent = '資料更新 ' + data.updated.replace(/-/g, '.');
+    } catch (e) {
+      $('#finder-status').textContent = '花海資料暫時讀取不到，請稍後再試。';
+    }
+    renderReports();
+  }
+
+  function setOrigin(origin, label) {
+    state.origin = origin;
+    const first = state.spots.filter(r => r.phase === 'now').map(r => ({...r, km: distanceKm(origin, r)})).sort((a, b) => a.km - b.km)[0];
+    $('#finder-status').textContent = '從' + label + '出發' + (first ? '，最近的是' + first.place + '（' + driveLabel(first.km) + '）' : '') + '。';
+    renderReports();
+  }
+
+  function initFinder() {
+    const sel = $('#finder-county');
+    sel.insertAdjacentHTML('beforeend', COUNTIES.map(([n]) => `<option value="${esc(n)}">${esc(n)}</option>`).join(''));
+    sel.addEventListener('change', () => {
+      const c = COUNTIES.find(([n]) => n === sel.value);
+      if (c) setOrigin({lat: c[1], lng: c[2]}, c[0]);
+    });
+    const btn = $('#finder-locate');
+    if (!navigator.geolocation) { btn.hidden = true; return; }
+    btn.addEventListener('click', () => {
+      $('#finder-status').textContent = '定位中…';
+      navigator.geolocation.getCurrentPosition(
+        p => { sel.value = ''; setOrigin({lat: p.coords.latitude, lng: p.coords.longitude}, '你的位置'); },
+        () => { $('#finder-status').textContent = '無法取得位置，請改選出發縣市。'; },
+        {enableHighAccuracy: false, timeout: 10000, maximumAge: 600000}
+      );
+    });
   }
 
   // ---------- 初始化 ----------
@@ -185,7 +262,8 @@
   renderDaily();
   renderOccasions();
   renderGifts();
-  renderReports();
+  initFinder();
+  loadReports();
 
   $('#daily').addEventListener('click', openCard);
   modal.addEventListener('click', e => { if (e.target === modal) closeCard(); });
