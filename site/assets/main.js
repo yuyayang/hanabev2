@@ -23,6 +23,7 @@
   ];
   // photo：去背照片（assets/img/gifts/*.webp，由 gift-photo-cutout skill 產生）；沒有時改用 img 的 Drive 縮圖
   const GIFTS = [
+    {id:'g7',name:'華容貴妃',tag:'開幕',occ:['開幕','致意'],desc:'紅白玫瑰、藍繡球、火鶴、小向日葵 · 長盆盆花',price:'',img:'',photo:'assets/img/gifts/g7.webp'},
     {id:'g1',name:'竹青晨霧',tag:'生日',occ:['生日','致意'],desc:'尤加利、白色桔梗、芒草',price:'1,880',img:'1WpZGzahLpMLoEOdix8ukW04q4LB4bFF2'},
     {id:'g2',name:'櫻與海',tag:'告白',occ:['告白','生日'],desc:'粉玫瑰、藍星花、雪柳',price:'2,280',img:'1HhAxLmSYU1ch8PvvPqIOBRbWvMbf5N6M'},
     {id:'g3',name:'一片楓葉',tag:'開幕',occ:['開幕','節慶'],desc:'橘色海芋、楓葉、乾燥麥穗 · 花籃',price:'3,600',img:'1NooH9OCVwS-GRkO5T6Y-efEwuO8aTW--'},
@@ -150,7 +151,7 @@
           <span class="gift__desc">${esc(g.desc)}</span>
         </div>
         <div class="gift__foot">
-          <span class="gift__price">NT$ ${esc(g.price)}</span>
+          <span class="gift__price">${g.price ? 'NT$ ' + esc(g.price) : '價格洽詢'}</span>
           <span class="gift__order">訂購 →</span>
         </div>
       </a>`).join('');

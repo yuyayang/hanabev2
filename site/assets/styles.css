@@ -107,7 +107,7 @@ p{margin:0}
 .gift__stage{position:relative;aspect-ratio:4/5;background:var(--grad-mist);overflow:hidden}
 .gift__grain{position:absolute;inset:0;pointer-events:none;background-image:var(--texture-grain);opacity:.35;mix-blend-mode:multiply}
 .gift__shadow{position:absolute;left:18%;right:18%;bottom:7%;height:5%;border-radius:50%;background:var(--ink-1);opacity:.12;filter:blur(10px);pointer-events:none}
-.gift__img{position:absolute;inset:8% 10% 6%;width:80%;height:86%;object-fit:contain}
+.gift__img{position:absolute;inset:8% 8% 8%;width:84%;height:84%;object-fit:contain;object-position:center bottom}
 .gift__img[hidden]{display:none}
 .gift__body{padding:20px 20px 0;display:flex;flex-direction:column;gap:8px}
 .gift__tag{color:var(--ink-3)}
