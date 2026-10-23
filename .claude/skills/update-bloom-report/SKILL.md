@@ -19,6 +19,7 @@ description: "每週更新花日和首頁的「花海通報」：依 seasonal-fl
 4. 只採信縣市政府、農會、觀光署、國家公園、近 2 週新聞
 5. 依下方欄位改寫 JSON，`updated` 設為今天
 6. 執行檢查：`python3 -m json.tool site/data/reports.json > /dev/null`
+7. 發布：commit「花海通報 YYYY-MM-DD」，推到 `main`（Vercel 正式站）與 `feature/homepage`
 
 ## 季節景色參考表（與花海一起搜尋，同樣需確認）
 | 月份 | 景色 | 代表地點（舉例） |
@@ -42,7 +43,7 @@ description: "每週更新花日和首頁的「花海通報」：依 seasonal-fl
 | `dataDate` | 資料日期 `YYYY-MM-DD`，只知月份時寫 `YYYY-MM` |
 | `lat`、`lng` | 景點座標（小數 4 位） |
 | `period`、`best`、`traffic`、`ticket`、`tip` | 短句，不憑記憶寫門票與日期 |
-| `gift` | 對應花禮名稱，須是 `site/assets/main.js` 的 `GIFTS` 之一 |
+| `gift` | 對應花禮名稱，須是 `site/data/gifts.json` 中**有 `photo`** 的花禮 `name`（網站只顯示有照片的花禮） |
 | `img` | 有照片放 `assets/img/` 路徑，沒有留空字串 |
 | `source` | 主要來源網址 |
 
