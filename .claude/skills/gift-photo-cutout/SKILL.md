@@ -1,64 +1,49 @@
 ---
 name: "gift-photo-cutout"
-description: "使用者上傳或指定花禮照片時使用：自動去背、調亮，輸出透明 WebP 到 site/assets/img/gifts/，並接到首頁花禮推薦卡片。觸發語：「花禮照片」「去背」「換花禮圖」，或使用者直接傳花束／花籃／盆花照片。"
+description: "使用者上傳或指定花禮照片時使用：把原圖轉成網頁用 WebP 放到 site/assets/img/gifts/，並接到首頁花禮推薦卡片；使用者明確要求時才去背。觸發語：「花禮照片」「換花禮圖」「去背」，或使用者直接傳花束／花籃／盆花照片。"
 ---
 
-# 花禮照片去背調亮
+# 花禮照片上架
 
 ## 目標
-- 每張花禮照片：去背 → 調亮 → 依主體裁切 → 透明背景 WebP
+- 預設**用原圖**：不去背、不調色，只轉成 WebP 並縮到最長邊 1600px
 - 輸出到 `site/assets/img/gifts/{禮品 id}.webp`，接到 `site/assets/main.js` 的 `GIFTS`
+- 卡片照片框是 1:1 正方形、填滿裁切（`object-fit: cover`）
 
 ## 步驟
 1. **準備環境**（每個新容器做一次）
    ```bash
-   python3 -c "import rembg" 2>/dev/null || pip install --quiet --break-system-packages "rembg[cpu]"
+   python3 -c "import pillow_heif" 2>/dev/null || pip install --quiet --break-system-packages pillow-heif
    ```
-   - iPhone HEIC 照片另需：`pip install --quiet --break-system-packages pillow-heif`
-   - 第一次執行會下載去背模型（birefnet-general 約 900 MB），需要幾分鐘
 
 2. **確認每張照片對應哪個花禮**
-   - 對照 `main.js` 的 `GIFTS`（g1 竹青晨霧、g2 櫻與海、g3 一片楓葉、g4 暮色玫瑰、g5 秋日小盆、g6 白日長亭）
-   - 使用者沒說 → 先看照片內容與 `desc` 花材比對，提出對應表請使用者確認，不要自己猜定
-   - 新花禮 → 請使用者提供名稱、場合、花材、價格，再新增一筆 `GIFTS`
+   - 對照 `main.js` 的 `GIFTS`
+   - 使用者說「隨機配」→ 用 `random.shuffle` 分配到現有花禮，並依照片內容改寫 `desc` 花材
+   - 新花禮 → 請使用者提供名稱、場合、花材、價格；沒提供的價格留空（卡片顯示「價格洽詢」）
 
-3. **先判斷要不要去背**（使用者規則：背景太複雜才去背）
-   - 背景乾淨或有刻意布置（素色牆、布景、木桌）→ 不去背、不調色，直接用：
-     ```bash
-     python3 scripts/cutout_gift.py 照片.jpg --name g8 --keep-bg
-     ```
-   - 背景雜亂（工作室、天花板燈、旁邊有其他作品或雜物、有人）→ 去背
-   - 先列出每張的判斷給使用者看
-
-4. **執行去背**
+3. **轉檔**
    ```bash
-   python3 scripts/cutout_gift.py 照片.jpg --name g1
+   python3 scripts/cutout_gift.py 照片.HEIC --name g8 --keep-bg
    ```
-   - 多張且檔名已是 id：`python3 scripts/cutout_gift.py g1.jpg g2.jpg`
-   - 可調參數：`--brightness`（預設 1.12）、`--contrast`（1.03）、`--saturation`（1.04）
-   - 預設模型 birefnet-general（花材細節、深色花器保留最完整）
-   - 效果不好 → 換 `--model isnet-general-use` 或 `--model u2net` 比較
-   - 照片裡有人或雜物 → 加 `--crop 左,上,右,下`（比例 0–1）先裁出主體再去背
-   - 壁掛、木板等底座被去掉時 → 換 `--model u2net`，它較會保留底座
-   - 照片不是完成品（例如空花器）→ 不要上架，回報使用者
+   - 旁邊有別的作品或雜物 → 加 `--crop 左,上,右,下`（比例 0–1）裁掉
 
-5. **檢查結果**（必做）
-   - 用 Read 看輸出圖，確認：主體完整、沒有殘留背景、花瓣邊緣沒被切掉、亮度自然不過曝
-   - 合成到網站底色預覽：
-     ```bash
-     python3 -c "from PIL import Image; im=Image.open('site/assets/img/gifts/g1.webp'); bg=Image.new('RGBA',im.size,(223,226,218,255)); bg.alpha_composite(im); bg.save('/tmp/preview.png')"
-     ```
-   - 不理想就調參數重跑；過曝降 `--brightness`，偏暗升到 1.2
+4. **檢查取景**（必做）
+   - 啟動網站截圖花禮區，確認每張主體都在正方形框內
+   - 主體偏下或偏上 → 在 `GIFTS` 加 `pos:'center 85%'`（調整 `object-position`）
 
-6. **接到網站**
-   - 在 `GIFTS` 對應項目加 `photo:'assets/img/gifts/g1.webp'`
-   - `img`（Drive ID）保留當備援
+5. **接到網站**
+   - `GIFTS` 對應項目加 `photo:'assets/img/gifts/g8.webp'`
+   - 首頁只顯示有 `photo` 的花禮，每次載入隨機排序，最多 `CONFIG.giftCount` 張；不加「看更多」
 
-7. **回報**
-   - 列出：原檔 → 輸出檔 → 對應花禮
-   - 把去背後的圖用 SendUserFile 給使用者看
+6. **回報**：列出 原檔 → 輸出檔 → 對應花禮，並附花禮區截圖
+
+## 去背（僅在使用者明確要求時）
+- 使用者已表示去背效果「太怪」，**不要主動去背**
+- 需要時：先 `pip install --quiet --break-system-packages "rembg[cpu]"`，再執行不加 `--keep-bg` 的指令
+  - 預設模型 birefnet-general（約 900 MB）；底座被去掉時換 `--model u2net`
+  - 去背後會調亮（`--brightness` 預設 1.12），務必用 Read 看結果再上架
 
 ## 規則
 - 原始照片不放進 repo，只留輸出的 WebP
-- 不改照片構圖、不加濾鏡風格，只做去背與亮度微調
-- 一次處理多張時，每張都要看過結果再回報
+- 照片不是完成品（例如空花器）→ 不上架，回報使用者
+- 使用者要求移除的照片，連同 WebP 一起刪掉
