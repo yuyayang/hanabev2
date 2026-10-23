@@ -45,7 +45,8 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const state = {offset: 0, occ: '全部', spots: [], origin: null};
+  const KINDS = [['all','全部'],['flower','花海'],['scenery','季節景色']];
+  const state = {offset: 0, occ: '全部', spots: [], origin: null, kind: 'all'};
 
   // ---------- 每日一花 ----------
   function flowerFor(offset) {
@@ -174,7 +175,7 @@
   }
 
   function reportCard(r) {
-    const meta = [r.region, r.county, r.km != null ? `<span class="report__dist">${esc(driveLabel(r.km))}</span>` : ''].filter(Boolean);
+    const meta = [r.kind === 'scenery' ? '季節景色' : r.region, r.county, r.km != null ? `<span class="report__dist">${esc(driveLabel(r.km))}</span>` : ''].filter(Boolean);
     return `
       <article class="report">
         <div class="report__head">
@@ -185,7 +186,7 @@
           </div>
         </div>
         <div class="report__rows">
-          <div class="report__row"><span>花況</span>
+          <div class="report__row"><span>${r.kind === 'scenery' ? '景況' : '花況'}</span>
             <span class="report__status" aria-label="花況 ${r.lv}/4 ${esc(r.status)}">
               ${[0,1,2,3].map(i => `<span class="report__dot${i < r.lv ? ' is-on' : ''}"></span>`).join('')}
               <span class="report__status-text">${esc(r.status)}</span>
@@ -206,11 +207,16 @@
       </article>`;
   }
 
+  function renderKinds() {
+    $('#report-kinds').innerHTML = KINDS.map(([k, label]) =>
+      `<button type="button" class="tag" data-kind="${k}" aria-pressed="${k === state.kind}">${label}</button>`).join('');
+  }
+
   function renderReports() {
-    const list = state.spots.map(r => ({...r, km: state.origin ? distanceKm(state.origin, r) : null}));
+    const list = state.spots.filter(r => state.kind === 'all' || (r.kind || 'flower') === state.kind).map(r => ({...r, km: state.origin ? distanceKm(state.origin, r) : null}));
     if (state.origin) list.sort((a, b) => a.km - b.km);
     const now = list.filter(r => r.phase === 'now'), soon = list.filter(r => r.phase !== 'now');
-    $('#report-grid').innerHTML = now.length ? now.map(reportCard).join('') : '<p class="report-note">本週沒有確認在開的花海。</p>';
+    $('#report-grid').innerHTML = now.length ? now.map(reportCard).join('') : '<p class="report-note">本週沒有確認可賞的景點。</p>';
     $('#report-soon').innerHTML = soon.map(reportCard).join('');
     $('#report-soon-group').hidden = !soon.length;
   }
@@ -240,6 +246,14 @@
   }
 
   function initFinder() {
+    renderKinds();
+    $('#report-kinds').addEventListener('click', e => {
+      const t = e.target.closest('[data-kind]');
+      if (!t) return;
+      state.kind = t.dataset.kind;
+      renderKinds();
+      renderReports();
+    });
     const sel = $('#finder-county');
     sel.insertAdjacentHTML('beforeend', COUNTIES.map(([n]) => `<option value="${esc(n)}">${esc(n)}</option>`).join(''));
     sel.addEventListener('change', () => {
