@@ -1,0 +1,9 @@
+html{background:var(--surface-page);color:var(--text-body);font:var(--type-body);-webkit-font-smoothing:antialiased}
+a{color:var(--bamboo-700);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:var(--leaf-700)}
+::selection{background:var(--bamboo-100)}
+/* Fine grain on an element (gradients, media, color fields) */
+.hh-grain{position:relative}
+.hh-grain::after{content:"";position:absolute;inset:0;background-image:var(--texture-grain);mix-blend-mode:multiply;pointer-events:none;opacity:var(--grain-opacity);border-radius:inherit}
+/* Whole-page paper grain — put on <body> */
+.hh-paper::before{content:"";position:fixed;inset:0;background-image:var(--texture-grain);mix-blend-mode:multiply;pointer-events:none;opacity:var(--grain-page-opacity);z-index:9999}

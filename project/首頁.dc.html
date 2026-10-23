@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/design-system-b8ec5b40-28d4-4b64-8bb3-a3b2ae67a32e/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/design-system-b8ec5b40-28d4-4b64-8bb3-a3b2ae67a32e/tokens/colors.css">
+<link rel="stylesheet" href="_ds/design-system-b8ec5b40-28d4-4b64-8bb3-a3b2ae67a32e/tokens/typography.css">
+<link rel="stylesheet" href="_ds/design-system-b8ec5b40-28d4-4b64-8bb3-a3b2ae67a32e/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/design-system-b8ec5b40-28d4-4b64-8bb3-a3b2ae67a32e/tokens/effects.css">
+<link rel="stylesheet" href="_ds/design-system-b8ec5b40-28d4-4b64-8bb3-a3b2ae67a32e/tokens/base.css">
+<link rel="stylesheet" href="_ds/design-system-b8ec5b40-28d4-4b64-8bb3-a3b2ae67a32e/styles.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="_ds/design-system-b8ec5b40-28d4-4b64-8bb3-a3b2ae67a32e/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>body{margin:0;background:var(--paper-1);color:var(--ink-1)}a{color:var(--ink-1);text-decoration:none}a:hover{color:var(--bamboo-700)}*{box-sizing:border-box}</style>
+</helmet>
+
+<div style="background:var(--paper-1);font:var(--type-body);color:var(--ink-1)">
+
+<section data-screen-label="01 主視覺" style="position:relative;height:min(100vh,860px);min-height:600px;overflow:hidden;background:var(--grad-mist)">
+  <div style="position:absolute;inset:0">
+    <image-slot id="hero-main" shape="rect" placeholder="主視覺照片 · 滿版"></image-slot>
+  </div>
+  <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(42,41,38,.38) 0%,rgba(42,41,38,0) 26%,rgba(42,41,38,0) 55%,rgba(42,41,38,.42) 100%)"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;background-image:var(--texture-grain);opacity:.22;mix-blend-mode:multiply"></div>
+
+  <header style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:28px 56px;color:var(--paper-0);pointer-events:none">
+    <a href="#top" style="display:flex;align-items:baseline;gap:12px;color:var(--paper-0);pointer-events:auto">
+      <span style="font:300 20px/1 var(--font-serif);letter-spacing:.2em">花日和</span>
+      <span style="font:var(--type-label);letter-spacing:.28em;text-transform:uppercase;opacity:.85">Hanabiyori</span>
+    </a>
+    <nav style="display:flex;gap:32px;flex-wrap:wrap;pointer-events:auto">
+      <a href="#map" style="color:var(--paper-0);font:300 14px/1 var(--font-serif);letter-spacing:.14em">花海地圖</a>
+      <a href="#report" style="color:var(--paper-0);font:300 14px/1 var(--font-serif);letter-spacing:.14em">花海通報</a>
+      <a href="#journal" style="color:var(--paper-0);font:300 14px/1 var(--font-serif);letter-spacing:.14em">花誌訂閱</a>
+      <a href="#gifts" style="color:var(--paper-0);font:300 14px/1 var(--font-serif);letter-spacing:.14em">花禮推薦</a>
+      <a href="#about" style="color:var(--paper-0);font:300 14px/1 var(--font-serif);letter-spacing:.14em">關於我</a>
+    </nav>
+  </header>
+
+  <sc-if value="{{ heroCenter }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;color:var(--paper-0);text-align:center;pointer-events:none;padding:0 24px">
+      <span style="font:var(--type-label);letter-spacing:.32em;text-transform:uppercase">Flowers · Seasons · Slow Days</span>
+      <h1 style="margin:0;font:300 clamp(56px,9vw,120px)/1 var(--font-serif);letter-spacing:.24em;text-indent:.24em">花日和</h1>
+      <span style="font:400 clamp(22px,2.6vw,34px)/1 var(--font-display);letter-spacing:.12em">Hanabiyori</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{ heroCorner }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:56px;right:56px;bottom:56px;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;color:var(--paper-0);pointer-events:none">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <span style="font:var(--type-label);letter-spacing:.32em;text-transform:uppercase">No.01 ———— Flowers · Seasons</span>
+        <h1 style="margin:0;font:300 clamp(56px,8vw,112px)/1 var(--font-serif);letter-spacing:.2em">花日和</h1>
+        <span style="font:400 clamp(22px,2.4vw,32px)/1 var(--font-display);letter-spacing:.1em">Hanabiyori</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;font:var(--type-label);letter-spacing:.24em;text-transform:uppercase">
+        <span>{{ todayLabel }}</span>
+        <span style="opacity:.85">Scroll ↓</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <div id="daily" onClick="{{ openCard }}" title="點開每日小卡" style="position:absolute;top:120px;right:56px;width:208px;cursor:pointer;background:var(--paper-0);padding:10px 10px 14px;box-shadow:var(--shadow-float);transform:rotate(2deg);transition:transform 320ms var(--ease-breeze),box-shadow 320ms var(--ease-breeze);display:flex;flex-direction:column;gap:10px" style-hover="transform:rotate(0deg) translateY(-4px)">
+    <div style="position:relative;aspect-ratio:4/5;background:var(--grad-mist);overflow:hidden;pointer-events:none">
+      <image-slot id="{{ flower.slotId }}" shape="rect" placeholder="{{ flower.placeholder }}"></image-slot>
+      <span style="position:absolute;left:8px;top:8px;font:var(--type-label);font-size:10px;letter-spacing:.18em;background:var(--veil);padding:4px 7px">NO.{{ flower.no }}</span>
+    </div>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px">
+      <span style="font:300 18px/1.2 var(--font-serif);letter-spacing:.14em">{{ flower.name }}</span>
+      <span style="font:var(--type-label);font-size:10px;letter-spacing:.16em;color:var(--ink-3)">{{ flower.short }}</span>
+    </div>
+    <span style="padding:0 2px;font:300 13px/1.6 var(--font-serif);letter-spacing:.08em;color:var(--ink-2)">{{ flower.quote }}</span>
+    <span style="padding:8px 2px 0;border-top:1px solid var(--line-hair);font:var(--type-label);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--bamboo-700)">Daily Card · 點開收藏 ↗</span>
+  </div>
+</section>
+
+<sc-if value="{{ cardOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeCard }}" style="position:fixed;inset:0;z-index:50;background:var(--scrim);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow:auto">
+    <div onClick="{{ stop }}" style="margin:auto;display:flex;flex-direction:column;align-items:center;gap:20px">
+      <div ref="{{ cardRef }}" style="width:min(380px,86vw,calc((100vh - 160px) * 0.62));background:var(--paper-0);padding:18px 18px 26px;box-shadow:var(--shadow-float);display:flex;flex-direction:column;gap:18px">
+        <div style="position:relative;aspect-ratio:4/5;background:var(--grad-mist);overflow:hidden">
+          <image-slot id="{{ flower.slotId }}" shape="rect" placeholder="{{ flower.placeholder }}"></image-slot>
+          <span style="position:absolute;left:12px;top:12px;pointer-events:none;font:var(--type-label);letter-spacing:.18em;text-transform:uppercase;background:var(--veil);padding:5px 9px">{{ flower.term }}</span>
+        </div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <span style="font:300 30px/1.1 var(--font-serif);letter-spacing:.14em">{{ flower.name }}</span>
+            <span style="font:400 16px/1 var(--font-display);letter-spacing:.06em;color:var(--ink-2)">{{ flower.en }}</span>
+          </div>
+          <span style="font:var(--type-label);letter-spacing:.16em;color:var(--ink-3)">花語 {{ flower.meaning }}</span>
+        </div>
+        <span style="font:300 19px/1.7 var(--font-serif);letter-spacing:.1em;text-wrap:pretty">{{ flower.quote }}</span>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding-top:12px;border-top:1px solid var(--line-hair);font:var(--type-label);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)">
+          <span>{{ flower.dateLabel }}</span><span>花日和 · NO.{{ flower.no }}</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;white-space:nowrap">
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.IconButton" label="前一天" on-click="{{ prevDay }}" hint-size="40px,40px"><x-import component-from-global-scope="DesignSystem_b8ec5b.Icon" name="arrow-left" size="{{ 18 }}" hint-size="18px,18px"></x-import></x-import>
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.Button" variant="primary" on-click="{{ download }}" hint-size="150px,40px">下載紀念小卡</x-import>
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.IconButton" label="後一天" on-click="{{ nextDay }}" hint-size="40px,40px"><x-import component-from-global-scope="DesignSystem_b8ec5b.Icon" name="arrow-right" size="{{ 18 }}" hint-size="18px,18px"></x-import></x-import>
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.IconButton" label="關閉" on-click="{{ closeCard }}" hint-size="40px,40px"><x-import component-from-global-scope="DesignSystem_b8ec5b.Icon" name="x" size="{{ 18 }}" hint-size="18px,18px"></x-import></x-import>
+      </div>
+      <sc-if value="{{ savedMsg }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;letter-spacing:.1em;color:var(--paper-0)">{{ savedMsg }}</span></sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<section id="gifts" data-screen-label="03 花禮推薦" style="padding:96px 56px;border-bottom:1px solid var(--line-hair)">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.IndexLabel" no="02" hint-size="100%,16px">Seasonal Gifts · 花禮推薦</x-import>
+        <h2 style="margin:0;font:var(--type-h2);letter-spacing:.1em">這個季節，送一束剛好的花</h2>
+        <p style="margin:0;color:var(--ink-2);max-width:480px">依心意挑選，點進花禮即可前往訂購系統，選日期、時段與送達方式。</p>
+      </div>
+      <div style="flex-shrink:0;white-space:nowrap"><x-import component-from-global-scope="DesignSystem_b8ec5b.Button" variant="primary" hint-size="180px,44px">前往訂購系統 →</x-import></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;white-space:nowrap">
+      <sc-for list="{{ occasions }}" as="o" hint-placeholder-count="7">
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.Tag" selected="{{ o.selected }}" on-click="{{ o.onClick }}" hint-size="64px,32px">{{ o.label }}</x-import>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:28px">
+      <sc-for list="{{ gifts }}" as="g" hint-placeholder-count="4">
+        <a href="#order" style="display:flex;flex-direction:column;background:var(--paper-0);border:1px solid var(--line-hair);border-radius:2px;overflow:hidden;color:var(--ink-1);transition:transform 320ms var(--ease-breeze),box-shadow 320ms var(--ease-breeze)" style-hover="transform:translateY(-2px);box-shadow:var(--shadow-soft);color:var(--ink-1)">
+          <div style="position:relative;aspect-ratio:4/5;background:var(--grad-mist);overflow:hidden">
+            <div style="position:absolute;inset:0;pointer-events:none;background-image:var(--texture-grain);opacity:.35;mix-blend-mode:multiply"></div>
+            <div style="position:absolute;left:18%;right:18%;bottom:7%;height:5%;border-radius:50%;background:var(--ink-1);opacity:.12;filter:blur(10px);pointer-events:none"></div>
+            <div style="position:absolute;inset:8% 10% 6%">
+              <image-slot id="{{ g.slotId }}" shape="rect" fit="contain" src="{{ g.src }}" placeholder="{{ g.placeholder }} · 去背 PNG"></image-slot>
+            </div>
+          </div>
+          <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:8px">
+            <span style="font:var(--type-label);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)">{{ g.tag }}</span>
+            <span style="font:300 20px/1.3 var(--font-serif);letter-spacing:.1em">{{ g.name }}</span>
+            <span style="font-size:14px;color:var(--ink-2)">{{ g.desc }}</span>
+          </div>
+          <div style="margin:16px 20px 0;padding:14px 0 18px;border-top:1px solid var(--line-hair);display:flex;justify-content:space-between;align-items:center">
+            <span style="font:400 13px/1 var(--font-mono);letter-spacing:.08em">NT$ {{ g.price }}</span>
+            <span style="font-size:13px;color:var(--bamboo-700);letter-spacing:.1em">訂購 →</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="report" data-screen-label="04 花海通報" style="padding:96px 56px;border-bottom:1px solid var(--line-hair);background:var(--paper-0)">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.IndexLabel" no="03" hint-size="100%,16px">Weekly Bloom Report · 花海通報</x-import>
+        <h2 style="margin:0;font:var(--type-h2);letter-spacing:.1em">本週，正在開的花海</h2>
+        <p style="margin:0;color:var(--ink-2);max-width:480px">每週四更新。花況、最佳時段與交通，一次看完。</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0;white-space:nowrap">
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.Button" variant="secondary" hint-size="140px,44px">花海地圖</x-import>
+        <x-import component-from-global-scope="DesignSystem_b8ec5b.Button" variant="ink" hint-size="140px,44px">所有通報 →</x-import>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:28px">
+      <sc-for list="{{ reports }}" as="r" hint-placeholder-count="3">
+        <article style="display:flex;flex-direction:column;background:var(--paper-1);border:1px solid var(--line-hair);border-radius:2px;overflow:hidden">
+          <div style="padding:22px 22px 4px;display:flex;align-items:center;gap:16px">
+            <div style="position:relative;flex:none;width:64px;height:64px;background:var(--paper-2)">
+              <image-slot id="{{ r.slotId }}" shape="rect" placeholder="照片"></image-slot>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+              <span style="font:var(--type-label);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)">{{ r.region }} · {{ r.period }}</span>
+              <span style="font:300 20px/1.3 var(--font-serif);letter-spacing:.1em">{{ r.place }}</span>
+            </div>
+          </div>
+          <div style="padding:8px 22px 0;display:flex;flex-direction:column">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line-hair);font-size:14px">
+              <span style="color:var(--ink-3)">花況</span>
+              <span style="display:flex;align-items:center;gap:6px">
+                <sc-for list="{{ r.dots }}" as="d" hint-placeholder-count="4"><span style="width:9px;height:9px;border-radius:50%;border:1px solid var(--bamboo-700);background:{{ d.fill }}"></span></sc-for>
+                <span style="margin-left:6px;color:var(--ink-1)">{{ r.status }}</span>
+              </span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line-hair);font-size:14px"><span style="color:var(--ink-3)">最佳時段</span><span>{{ r.best }}</span></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:14px"><span style="color:var(--ink-3)">交通</span><span>{{ r.traffic }}</span></div>
+          </div>
+          <div style="margin-top:auto;padding:14px 22px 18px;border-top:1px solid var(--line-hair);display:flex;justify-content:space-between;align-items:center;font-size:13px;letter-spacing:.08em">
+            <a href="#map" style="color:var(--sea-700)">怎麼去 → Google Map</a>
+            <a href="#gifts" style="color:var(--ink-2)">對應花禮：{{ r.gift }}</a>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+    <sc-if value="{{ showSubscribe }}" hint-placeholder-val="{{ true }}">
+      <div id="journal" style="position:relative;overflow:hidden;background:var(--grad-tide);padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+        <div style="position:absolute;inset:0;pointer-events:none;background-image:var(--texture-grain);opacity:.3;mix-blend-mode:multiply"></div>
+        <div style="position:relative;display:flex;flex-direction:column;gap:10px">
+          <span style="font:var(--type-label);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-1)">Flower Journal · 花誌</span>
+          <span style="font:300 26px/1.4 var(--font-serif);letter-spacing:.1em">每週四，收一封花海通報</span>
+          <span style="font-size:14px;color:var(--ink-1)">隨時可取消。</span>
+        </div>
+        <div style="position:relative;display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;background:var(--veil);padding:16px 20px">
+          <div style="width:260px"><x-import component-from-global-scope="DesignSystem_b8ec5b.Input" placeholder="your@email.com" hint-size="260px,40px"></x-import></div>
+          <div style="flex-shrink:0;white-space:nowrap"><x-import component-from-global-scope="DesignSystem_b8ec5b.Button" variant="primary" hint-size="100px,40px">訂閱</x-import></div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<footer id="about" data-screen-label="05 頁尾" style="background:var(--ink-1);color:var(--paper-1);padding:72px 56px 32px">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:56px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:40px">
+      <div style="display:flex;flex-direction:column;gap:14px;grid-column:span 1">
+        <span style="font:300 24px/1 var(--font-serif);letter-spacing:.22em">花日和</span>
+        <span style="font:400 18px/1 var(--font-display);letter-spacing:.1em;color:var(--ink-4)">Hanabiyori</span>
+        <p style="margin:6px 0 0;font-size:14px;color:var(--ink-4);max-width:240px">跟著季節看花、選花、送花。</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font:var(--type-label);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4)">Explore</span>
+        <a href="#map" style="color:var(--paper-1);font-size:14px;letter-spacing:.1em">花海地圖</a>
+        <a href="#report" style="color:var(--paper-1);font-size:14px;letter-spacing:.1em">花海通報</a>
+        <a href="#journal" style="color:var(--paper-1);font-size:14px;letter-spacing:.1em">花誌訂閱</a>
+        <a href="#gifts" style="color:var(--paper-1);font-size:14px;letter-spacing:.1em">花禮推薦</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font:var(--type-label);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4)">About</span>
+        <a href="#about" style="color:var(--paper-1);font-size:14px;letter-spacing:.1em">關於我</a>
+        <a href="#order" style="color:var(--paper-1);font-size:14px;letter-spacing:.1em">訂購須知</a>
+        <a href="#order" style="color:var(--paper-1);font-size:14px;letter-spacing:.1em">配送範圍</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font:var(--type-label);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4)">Contact</span>
+        <span style="font-size:14px;letter-spacing:.06em">LINE @hanabiyori</span>
+        <span style="font-size:14px;letter-spacing:.06em">IG @hanabiyori.flower</span>
+        <span style="font-size:14px;letter-spacing:.06em;color:var(--ink-4)">工作室地址 · 預約制</span>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(239,236,231,.16);font:var(--type-label);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4)">
+      <span>© 2026 Hanabiyori</span>
+      <span>Flowers read like weather</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;corner&quot;,&quot;center&quot;],&quot;default&quot;:&quot;corner&quot;,&quot;tsType&quot;:&quot;'corner'|'center'&quot;,&quot;section&quot;:&quot;主視覺&quot;},&quot;giftCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:3,&quot;max&quot;:6,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;花禮推薦&quot;},&quot;showSubscribe&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;花海通報&quot;}}">
+const FLOWERS=[
+ {key:'susuki',name:'芒草',en:'Silver Grass',term:'霜降 · Late Autumn',meaning:'活力、堅韌',note:'十月底的山坡被芒花染成銀白，風一吹，整片山都在呼吸。插一把在玻璃瓶裡，秋天就留在桌上了。',quote:'風經過的地方，草會先知道。'},
+ {key:'cosmos',name:'波斯菊',en:'Cosmos',term:'寒露 · Autumn',meaning:'少女的純情',note:'花瓣薄得透光，開成一片時像粉色的霧。秋天的田裡最溫柔的一種顏色。',quote:'不必開得很大，開得很久就好。'},
+ {key:'osmanthus',name:'桂花',en:'Osmanthus',term:'秋分 · Autumn',meaning:'吉祥、思念',note:'還沒看見就先聞到。小小的金色花藏在葉間，香氣卻走得很遠。',quote:'有些想念，是先被聞到的。'},
+ {key:'chrysanthemum',name:'杭菊',en:'Hangzhou Chrysanthemum',term:'立冬 · Early Winter',meaning:'清雅、長壽',note:'銅鑼的山丘在十一月一片雪白，摘下曬乾，冬天就有一杯花茶。',quote:'慢下來的日子，也在開花。'},
+ {key:'cotton',name:'棉花',en:'Cotton Boll',term:'小雪 · Winter',meaning:'珍惜身邊的人',note:'柔軟、蓬鬆，像把雲朵剪下來。乾燥後能放很久，適合放進冬天的花束。',quote:'溫暖不用說出口，摸得到就好。'},
+ {key:'eucalyptus',name:'尤加利',en:'Eucalyptus',term:'大雪 · Winter',meaning:'恩賜、守護',note:'灰綠的圓葉帶著清涼的香氣，是一整年都在的配角，安靜地讓花更好看。',quote:'當個好配角，也是一種開花。'},
+ {key:'camellia',name:'山茶',en:'Camellia',term:'冬至 · Midwinter',meaning:'理想的愛',note:'在最冷的時候開，花落時整朵落下，乾淨俐落。',quote:'冷的季節，也有人在認真地美。'}
+];
+const GIFTS=[
+ {id:'g1',name:'竹青晨霧',tag:'生日',occ:['生日','致意'],desc:'尤加利、白色桔梗、芒草',price:'1,880',img:'1WpZGzahLpMLoEOdix8ukW04q4LB4bFF2'},
+ {id:'g2',name:'櫻與海',tag:'告白',occ:['告白','生日'],desc:'粉玫瑰、藍星花、雪柳',price:'2,280',img:'1HhAxLmSYU1ch8PvvPqIOBRbWvMbf5N6M'},
+ {id:'g3',name:'一片楓葉',tag:'開幕',occ:['開幕','節慶'],desc:'橘色海芋、楓葉、乾燥麥穗 · 花籃',price:'3,600',img:'1NooH9OCVwS-GRkO5T6Y-efEwuO8aTW--'},
+ {id:'g4',name:'暮色玫瑰',tag:'婚禮',occ:['婚禮','告白'],desc:'奶茶玫瑰、康乃馨、銀葉菊',price:'2,680',img:'1Fcwy11nDDRw2aCyihbD46vdQehbo4po7'},
+ {id:'g5',name:'秋日小盆',tag:'致意',occ:['致意','節慶'],desc:'多肉、苔球 · 盆花',price:'1,280',img:'1U432ic3aT-VVZbOtEP5R3i_J2yzMtsM6'},
+ {id:'g6',name:'白日長亭',tag:'節慶',occ:['節慶','開幕'],desc:'白色杭菊、棉花、松果 · 花盒',price:'1,580',img:'1Bim1yFWUHp1C4S3Fb1oKMc2gK1zcQqZq'}
+];
+const REPORTS=[
+ {id:'r1',place:'桃園 · 波斯菊花海',region:'北部',period:'10–12月 · 本週更新',lv:3,status:'盛開',best:'平日上午',traffic:'公車 · 停車資訊',gift:'櫻與海'},
+ {id:'r2',place:'苗栗銅鑼 · 杭菊',region:'中部',period:'11月 · 本週更新',lv:2,status:'初開',best:'清晨',traffic:'台鐵銅鑼站',gift:'白日長亭'},
+ {id:'r3',place:'台中新社 · 花海節',region:'中部',period:'11–12月 · 本週更新',lv:1,status:'含苞',best:'週末午後',traffic:'接駁車',gift:'一片楓葉'}
+];
+const OCC=['全部','生日','開幕','告白','致意','節慶','婚禮'];
+class Component extends DCLogic{
+  state={offset:0,occ:'全部',cardOpen:false,savedMsg:''};
+  cardRef=React.createRef();
+  async downloadCard(f){
+    const W=1080,H=1620,P=56,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+    const cs=getComputedStyle(document.documentElement),v=k=>cs.getPropertyValue(k).trim();
+    try{await document.fonts.ready}catch(e){}
+    const serif='"GenWanMin2","Noto Serif TC",serif',mono='"DM Mono",monospace',disp='"Italiana",serif';
+    g.fillStyle=v('--paper-0')||'#F7F5F1';g.fillRect(0,0,W,H);
+    const iw=W-P*2,ih=Math.round(iw*5/4);
+    const gr=g.createLinearGradient(0,P,0,P+ih);gr.addColorStop(0,v('--bamboo-300')||'#B4BDAD');gr.addColorStop(.6,v('--bamboo-100')||'#DFE2DA');gr.addColorStop(1,v('--paper-1')||'#EFECE7');
+    g.fillStyle=gr;g.fillRect(P,P,iw,ih);
+    const slot=this.cardRef.current&&this.cardRef.current.querySelector('image-slot');
+    const img=slot&&slot.shadowRoot&&slot.shadowRoot.querySelector('img');
+    if(img&&img.naturalWidth&&img.style.display!=='none'){try{const s=Math.max(iw/img.naturalWidth,ih/img.naturalHeight),dw=img.naturalWidth*s,dh=img.naturalHeight*s;g.save();g.beginPath();g.rect(P,P,iw,ih);g.clip();g.drawImage(img,P+(iw-dw)/2,P+(ih-dh)/2,dw,dh);g.restore();}catch(e){}}
+    g.fillStyle='rgba(239,236,231,.8)';g.font='26px '+mono;const tag=f.term.toUpperCase();const tw=g.measureText(tag).width;g.fillRect(P+28,P+28,tw+36,52);g.fillStyle=v('--ink-1')||'#33322F';g.textBaseline='middle';g.fillText(tag,P+46,P+55);
+    g.textBaseline='alphabetic';let y=P+ih+110;
+    g.font='300 76px '+serif;g.fillText(f.name,P,y);const nw=g.measureText(f.name).width;
+    g.fillStyle=v('--ink-2')||'#5C5A55';g.font='40px '+disp;g.fillText(f.en,P+nw+28,y);
+    g.font='26px '+mono;g.fillStyle=v('--ink-3')||'#8A8781';g.textAlign='right';g.fillText('花語 '+f.meaning,W-P,y);g.textAlign='left';
+    y+=90;g.fillStyle=v('--ink-1')||'#33322F';g.font='300 46px '+serif;
+    let line='';for(const ch of f.quote){if(g.measureText(line+ch).width>iw){g.fillText(line,P,y);y+=78;line=ch}else line+=ch}g.fillText(line,P,y);
+    g.fillStyle='rgba(42,41,38,.14)';g.fillRect(P,H-P-70,iw,2);
+    g.fillStyle=v('--ink-3')||'#8A8781';g.font='24px '+mono;g.fillText(f.dateLabel,P,H-P-20);g.textAlign='right';g.fillText('HANABIYORI · NO.'+f.no,W-P,H-P-20);
+    const a=document.createElement('a');a.download='花日和-'+f.name+'-'+f.dateLabel.slice(0,10)+'.png';
+    try{a.href=c.toDataURL('image/png');a.click();this.setState({savedMsg:'已下載「'+f.name+'」小卡'})}catch(e){this.setState({savedMsg:'照片無法匯出，請改用本機上傳的照片'})}
+    clearTimeout(this._t);this._t=setTimeout(()=>this.setState({savedMsg:''}),2400);
+  }
+  renderVals(){
+    const layout=this.props.heroLayout??'corner';
+    const d=new Date();d.setDate(d.getDate()+this.state.offset);
+    const doy=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);
+    const f=FLOWERS[((doy%FLOWERS.length)+FLOWERS.length)%FLOWERS.length];
+    const wk=['日','一','二','三','四','五','六'][d.getDay()];
+    const dateLabel=d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0')+' · 週'+wk;
+    const occ=this.state.occ;
+    const cols=this.props.giftCount??4;
+    return {
+      heroCenter:layout==='center',heroCorner:layout!=='center',
+      todayLabel:dateLabel,
+      flower:{...f,no:String(doy).padStart(3,'0'),dateLabel,short:dateLabel.slice(5,10),slotId:'daily-'+f.key,placeholder:f.name+' · 每日一花照片'},
+      cardOpen:this.state.cardOpen,savedMsg:this.state.savedMsg,cardRef:this.cardRef,
+      openCard:()=>this.setState({cardOpen:true}),
+      closeCard:()=>this.setState({cardOpen:false}),
+      stop:e=>e.stopPropagation(),
+      download:()=>this.downloadCard({...f,no:String(doy).padStart(3,'0'),dateLabel}),
+      prevDay:()=>this.setState(s=>({offset:s.offset-1})),
+      nextDay:()=>this.setState(s=>({offset:s.offset+1})),
+      occasions:OCC.map(o=>({label:o,selected:o===occ,onClick:()=>this.setState({occ:o})})),
+      gifts:GIFTS.filter(g=>occ==='全部'||g.occ.includes(occ)).slice(0,cols).map(g=>({...g,slotId:'gift-'+g.id,placeholder:g.name+' · 花禮照片',src:'https://drive.google.com/thumbnail?id='+g.img+'&sz=w1000'})),
+      reports:REPORTS.map(r=>({...r,slotId:'report-'+r.id,placeholder:r.place+' · 現場照片',dots:[0,1,2,3].map(i=>({fill:i<r.lv?'var(--bamboo-700)':'transparent'}))})),
+      showSubscribe:this.props.showSubscribe??true
+    };
+  }
+}
+</script>
+</body>
+</html>
