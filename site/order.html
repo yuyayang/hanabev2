@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>訂購需求 · 花日和 Hanabiyori</title>
-<meta name="description" content="填寫花禮訂購需求，確認花材與金額後再匯款。">
+<title>訂單 · 花日和 Hanabiyori</title>
+<meta name="description" content="送出花禮訂購需求，或在匯款後回報帳號後五碼。">
 <link rel="stylesheet" href="assets/tokens/fonts.css">
 <link rel="stylesheet" href="assets/tokens/colors.css">
 <link rel="stylesheet" href="assets/tokens/typography.css">
@@ -21,22 +21,28 @@
 <header class="subhead">
   <a href="index.html" class="brand"><span class="brand__zh">花日和</span><span class="brand__en">Hanabiyori</span></a>
   <nav class="subhead__nav">
-    <a href="index.html#report">花海通報</a>
-    <a href="index.html#gifts">花禮推薦</a>
-    <a href="order.html" aria-current="page">訂購需求</a>
-    <a href="pay.html">匯款回報</a>
+    <a href="map.html">花海地圖</a>
+    <a href="report.html">花海通報</a>
+    <a href="journal.html">花誌訂閱</a>
+    <a href="gifts.html">花禮推薦</a>
+    <a href="about.html">關於我</a>
+    <a href="order.html" aria-current="page">訂單</a>
   </nav>
 </header>
 
 <section class="page-hero">
   <div class="container">
-    <div class="index-label"><span>Step 1</span><span class="index-label__rule"></span><span>Order Request · 訂購需求</span></div>
-    <h1>先說說你想送的花</h1>
-    <p>送出需求後，我們會透過電話或 LINE 和你確認花材與金額；確認後再匯款，並到「匯款回報」填寫帳號後五碼。</p>
+    <div class="index-label"><span>Order</span><span class="index-label__rule"></span><span>訂購 · 匯款回報</span></div>
+    <h1>訂單</h1>
+    <p>第一次訂購請先送出需求；我們確認花材與金額、你完成匯款後，再到「匯款回報」填寫帳號後五碼。</p>
+    <div class="tabs" role="tablist">
+      <a class="tabs__tab" role="tab" href="#request" data-tab="request"><small>Step 1</small>送出訂購需求</a>
+      <a class="tabs__tab" role="tab" href="#pay" data-tab="pay"><small>Step 2</small>匯款回報</a>
+    </div>
   </div>
 </section>
 
-<section class="form-wrap">
+<section class="form-wrap tab-panel" id="panel-request" data-panel="request">
   <div class="container">
     <div class="form-grid">
       <div>
@@ -136,11 +142,11 @@
         <div class="done" id="order-done" hidden>
           <span class="label">Request Received · 已收到需求</span>
           <span>你的訂單編號</span>
-          <span class="done__id" id="done-id"></span>
+          <span class="done__id"></span>
           <ol>
             <li>請記下訂單編號，我們會在 1 個工作天內聯絡你確認花材與金額。</li>
             <li>確認後依提供的帳號匯款。</li>
-            <li>匯款後到 <a href="pay.html">匯款回報</a> 填寫訂單編號與帳號後五碼。</li>
+            <li>匯款後到 <a href="#pay" data-goto-pay>匯款回報</a> 填寫訂單編號與帳號後五碼。</li>
           </ol>
         </div>
       </div>
@@ -160,6 +166,54 @@
           <li><b>確認花材與金額</b>我們以電話或 LINE 聯絡你</li>
           <li><b>匯款</b>依提供的帳號匯款</li>
           <li><b>回報後五碼</b>到匯款回報頁填寫</li>
+          <li><b>製作與送達</b>依指定時間交付</li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="form-wrap tab-panel" id="panel-pay" data-panel="pay" hidden>
+  <div class="container">
+    <div class="form-grid">
+      <div>
+        <form class="form" id="pay-form" novalidate>
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <fieldset class="fieldset">
+            <legend><span>01</span><b>訂單</b></legend>
+            <div class="row">
+              <label class="field"><span>訂單編號 <em>*</em></span><input name="id" required placeholder="HB-261023-01" autocapitalize="characters"></label>
+              <label class="field"><span>訂購人電話 <em>*</em></span><input name="phone" type="tel" inputmode="tel" required><small>用來核對訂單</small></label>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend><span>02</span><b>匯款資訊</b></legend>
+            <div class="row">
+              <label class="field"><span>匯款帳號後五碼 <em>*</em></span><input name="last5" required inputmode="numeric" maxlength="5" pattern="\d{5}" placeholder="12345"></label>
+              <label class="field"><span>匯款日期</span><input name="payDate" type="date"></label>
+            </div>
+          </fieldset>
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary">送出回報</button>
+            <span class="form-msg" role="alert"></span>
+          </div>
+        </form>
+
+        <div class="done" id="pay-done" hidden>
+          <span class="label">Payment Reported · 已收到回報</span>
+          <span class="done__id"></span>
+          <ol>
+            <li>我們會在對帳後通知你，並開始備花。</li>
+            <li>如需修改，請直接以 LINE 聯絡。</li>
+          </ol>
+        </div>
+      </div>
+      <aside class="aside">
+        <ol class="steps">
+          <li><b>送出需求</b>取得訂單編號</li>
+          <li><b>確認花材與金額</b>我們以電話或 LINE 聯絡你</li>
+          <li><b>匯款</b>依提供的帳號匯款</li>
+          <li><b>回報後五碼</b>就是這裡</li>
           <li><b>製作與送達</b>依指定時間交付</li>
         </ol>
       </aside>

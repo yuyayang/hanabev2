@@ -27,7 +27,8 @@
       btn.disabled = true; btn.textContent = '送出中…';
       try {
         const res = await send(build(d));
-        $('#done-id').textContent = res.id;
+        $('.done__id', done).textContent = res.id;
+        if (form.id === 'order-form' && $('#pay-form')) $('#pay-form').elements.id.value = res.id;
         form.hidden = true; done.hidden = false;
         done.scrollIntoView({behavior: 'smooth', block: 'center'});
       } catch (x) {
@@ -37,6 +38,24 @@
       }
     });
     btn.dataset.label = btn.textContent;
+  }
+
+  // ---------- 分頁：送出訂購需求 / 匯款回報（網址 #request、#pay） ----------
+  const tabs = document.querySelectorAll('[data-tab]');
+  if (tabs.length) {
+    const show = name => {
+      if (!document.querySelector(`[data-panel="${name}"]`)) name = 'request';
+      document.querySelectorAll('[data-panel]').forEach(p => { p.hidden = p.dataset.panel !== name; });
+      tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.tab === name));
+    };
+    tabs.forEach(t => t.addEventListener('click', e => { e.preventDefault(); history.replaceState(null, '', '#' + t.dataset.tab); show(t.dataset.tab); }));
+    document.addEventListener('click', e => {
+      if (!e.target.closest('[data-goto-pay]')) return;
+      e.preventDefault(); history.replaceState(null, '', '#pay'); show('pay');
+      document.querySelector('.tabs').scrollIntoView({behavior: 'smooth'});
+    });
+    window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+    show(location.hash.slice(1) || (new URLSearchParams(location.search).get('id') ? 'pay' : 'request'));
   }
 
   // ---------- 訂購需求 ----------
