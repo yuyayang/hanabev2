@@ -14,7 +14,8 @@ description: "使用者上傳或指定花禮照片時使用：自動去背、調
    ```bash
    python3 -c "import rembg" 2>/dev/null || pip install --quiet --break-system-packages "rembg[cpu]"
    ```
-   - 第一次執行會下載約 180 MB 模型，約 20 秒
+   - iPhone HEIC 照片另需：`pip install --quiet --break-system-packages pillow-heif`
+   - 第一次執行會下載去背模型（birefnet-general 約 900 MB），需要幾分鐘
 
 2. **確認每張照片對應哪個花禮**
    - 對照 `main.js` 的 `GIFTS`（g1 竹青晨霧、g2 櫻與海、g3 一片楓葉、g4 暮色玫瑰、g5 秋日小盆、g6 白日長亭）
@@ -27,7 +28,10 @@ description: "使用者上傳或指定花禮照片時使用：自動去背、調
    ```
    - 多張且檔名已是 id：`python3 scripts/cutout_gift.py g1.jpg g2.jpg`
    - 可調參數：`--brightness`（預設 1.12）、`--contrast`（1.03）、`--saturation`（1.04）
-   - 去背效果不好 → 換 `--model u2net` 再試
+   - 預設模型 birefnet-general（花材細節、深色花器保留最完整）
+   - 效果不好 → 換 `--model isnet-general-use` 或 `--model u2net` 比較
+   - 照片裡有人或雜物 → 先用 PIL 裁出主體範圍再去背
+   - 照片不是完成品（例如空花器）→ 不要上架，回報使用者
 
 4. **檢查結果**（必做）
    - 用 Read 看輸出圖，確認：主體完整、沒有殘留背景、花瓣邊緣沒被切掉、亮度自然不過曝

@@ -11,6 +11,12 @@ from pathlib import Path
 
 from PIL import Image, ImageEnhance, ImageOps
 
+try:  # iPhone HEIC 照片（pip install pillow-heif）
+    from pillow_heif import register_heif_opener
+    register_heif_opener()
+except ImportError:
+    pass
+
 OUT_DIR = Path(__file__).resolve().parent.parent / "site" / "assets" / "img" / "gifts"
 MAX_SIDE = 1600   # 輸出最長邊
 PAD = 0.04        # 裁切後四周留白比例
@@ -58,7 +64,7 @@ def main() -> None:
     ap.add_argument("--brightness", type=float, default=1.12)
     ap.add_argument("--contrast", type=float, default=1.03)
     ap.add_argument("--saturation", type=float, default=1.04)
-    ap.add_argument("--model", default="isnet-general-use", help="rembg 模型：isnet-general-use、u2net …")
+    ap.add_argument("--model", default="birefnet-general", help="rembg 模型：birefnet-general、isnet-general-use、u2net …")
     args = ap.parse_args()
 
     if args.name and len(args.files) > 1:
