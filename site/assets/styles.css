@@ -79,6 +79,9 @@ p{margin:0}
 .card__en{font:400 16px/1 var(--font-display);letter-spacing:.06em;color:var(--ink-2)}
 .card__meaning{font:var(--type-label);letter-spacing:.16em;color:var(--ink-3)}
 .card__quote{font:300 19px/1.7 var(--font-serif);letter-spacing:.1em;text-wrap:pretty}
+.card__tip{margin-top:-6px;font-size:13px;line-height:1.7;color:var(--ink-3)}
+.card__tip:empty{display:none}
+.icon-btn:disabled{opacity:.35;cursor:default;background:transparent}
 .card__foot{display:flex;justify-content:space-between;gap:12px;padding-top:12px;border-top:1px solid var(--line-hair);font:var(--type-label);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
 .card-modal__actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;white-space:nowrap}
 .card-modal__actions .icon-btn{color:var(--ink-1)}

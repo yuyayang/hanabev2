@@ -6,11 +6,27 @@
     giftCount: 6,           // 3–6
     showSubscribe: true,
     orderUrl: '#order',     // 訂購系統網址，待提供
-    subscribeUrl: ''        // 花誌訂閱表單送出網址，待提供
+    subscribeUrl: '',       // 花誌訂閱表單送出網址，待提供
+    // 「花日和｜今日花草」試算表（daily 分頁，由每日排程寫入）；需設為「知道連結的任何人都能檢視」
+    dailySheetId: '1nlt5VMJT8ILvayvH9xGhjDgxXVbjhdU1XgJQaoxjBcU'
   };
+  const DAILY_CSV = `https://docs.google.com/spreadsheets/d/${CONFIG.dailySheetId}/gviz/tq?tqx=out:csv&sheet=daily`;
 
-  // 有實體照片的每日一花（其餘顯示霧面漸層底）
-  const DAILY_PHOTOS = { osmanthus: 'assets/img/daily-osmanthus.webp' };
+  // 有實體照片的每日一花，以名稱對應（其餘以試算表主色或霧面漸層為底）
+  const DAILY_PHOTOS = { '桂花': 'assets/img/daily-osmanthus.webp' };
+
+  // 二十四節氣（約略起始日）與季節
+  const TERMS = [[1,5,'小寒'],[1,20,'大寒'],[2,4,'立春'],[2,19,'雨水'],[3,5,'驚蟄'],[3,20,'春分'],[4,5,'清明'],[4,20,'穀雨'],
+    [5,5,'立夏'],[5,21,'小滿'],[6,6,'芒種'],[6,21,'夏至'],[7,7,'小暑'],[7,23,'大暑'],[8,7,'立秋'],[8,23,'處暑'],
+    [9,7,'白露'],[9,23,'秋分'],[10,8,'寒露'],[10,23,'霜降'],[11,7,'立冬'],[11,22,'小雪'],[12,7,'大雪'],[12,21,'冬至']];
+  const SEASONS = ['Winter','Winter','Spring','Spring','Spring','Spring','Spring','Spring','Summer','Summer','Summer','Summer','Summer','Summer',
+    'Autumn','Autumn','Autumn','Autumn','Autumn','Autumn','Winter','Winter','Winter','Winter'];
+  function termOf(d) {
+    let i = TERMS.length - 1;
+    TERMS.forEach(([m, day], k) => { if (d.getMonth() + 1 > m || (d.getMonth() + 1 === m && d.getDate() >= day)) i = k; });
+    if (d.getMonth() === 0 && d.getDate() < 5) i = TERMS.length - 1;
+    return TERMS[i][2] + ' · ' + SEASONS[i];
+  }
 
   const FLOWERS = [
     {key:'susuki',name:'芒草',en:'Silver Grass',term:'霜降 · Late Autumn',meaning:'活力、堅韌',note:'十月底的山坡被芒花染成銀白，風一吹，整片山都在呼吸。插一把在玻璃瓶裡，秋天就留在桌上了。',quote:'風經過的地方，草會先知道。'},
@@ -50,16 +66,39 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const KINDS = [['all','全部'],['flower','花海'],['scenery','季節景色']];
-  const state = {offset: 0, occ: '全部', spots: [], origin: null, kind: 'all'};
+  // daily：試算表中日期 ≤ 今天的列（舊 → 新）；讀不到時為 null，改用內建 FLOWERS
+  const state = {offset: 0, occ: '全部', spots: [], origin: null, kind: 'all', daily: null};
 
   // ---------- 每日一花 ----------
+  const pad2 = n => String(n).padStart(2, '0');
+  const isoOf = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  function dateLabelOf(d) {
+    return d.getFullYear() + '.' + pad2(d.getMonth() + 1) + '.' + pad2(d.getDate()) + ' · 週' + ['日','一','二','三','四','五','六'][d.getDay()];
+  }
+  function decorate(f, d) {
+    const doy = Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 864e5);
+    const dateLabel = dateLabelOf(d);
+    return {...f, no: String(doy).padStart(3, '0'), dateLabel, short: dateLabel.slice(5, 10), photo: DAILY_PHOTOS[f.name] || ''};
+  }
+
+  // 試算表模式：offset 0 為最新一列，-1 為前一列；內建模式：offset 為相對今天的天數
   function flowerFor(offset) {
+    if (state.daily) {
+      const r = state.daily[state.daily.length - 1 + offset];
+      const [y, m, day] = r.date.split('-').map(Number);
+      return decorate({...r, term: termOf(new Date(y, m - 1, day))}, new Date(y, m - 1, day));
+    }
     const d = new Date(); d.setDate(d.getDate() + offset);
     const doy = Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 864e5);
     const f = FLOWERS[((doy % FLOWERS.length) + FLOWERS.length) % FLOWERS.length];
-    const wk = ['日','一','二','三','四','五','六'][d.getDay()];
-    const dateLabel = d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0') + ' · 週' + wk;
-    return {...f, no: String(doy).padStart(3, '0'), dateLabel, short: dateLabel.slice(5, 10), photo: DAILY_PHOTOS[f.key] || ''};
+    return decorate({...f, tip: f.note}, d);
+  }
+
+  function step(delta) {
+    const next = state.offset + delta;
+    if (state.daily && (next > 0 || next < 1 - state.daily.length)) return;
+    state.offset = next;
+    renderDaily();
   }
 
   function renderDaily() {
@@ -67,12 +106,50 @@
     $$('[data-bind]').forEach(el => {
       const k = el.dataset.bind;
       if (k === 'todayLabel') return;
-      el.textContent = f[k];
+      el.textContent = f[k] || '';
     });
     $$('[data-bind-img="flower"]').forEach(img => {
       if (f.photo) { img.src = f.photo; img.alt = f.name; } else { img.removeAttribute('src'); img.alt = ''; }
+      const slot = img.parentElement;
+      slot.style.background = /^#[0-9a-f]{6}$/i.test(f.color || '') ? `linear-gradient(180deg,${f.color} 0%,var(--paper-1) 100%)` : '';
     });
     $('#daily').setAttribute('aria-label', '點開每日小卡：' + f.name);
+    if (state.daily) {
+      $('[data-action="prev"]', modal).disabled = state.offset <= 1 - state.daily.length;
+      $('[data-action="next"]', modal).disabled = state.offset >= 0;
+    }
+  }
+
+  function parseCsv(text) {
+    const rows = []; let row = [], cell = '', q = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (q) { if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; } else if (c === '"') q = false; else cell += c; }
+      else if (c === '"') q = true;
+      else if (c === ',') { row.push(cell); cell = ''; }
+      else if (c === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+      else if (c !== '\r') cell += c;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  // 讀「今日花草」試算表：欄位 日期｜名稱｜英文名｜類別｜花語｜今日一句｜小知識｜主色
+  async function loadDailySheet() {
+    try {
+      const res = await fetch(DAILY_CSV, {cache: 'no-cache'});
+      if (!res.ok) throw new Error(res.status);
+      const today = isoOf(new Date());
+      const rows = parseCsv(await res.text()).slice(1)
+        .map(([date, name, en, kind, meaning, quote, tip, color]) =>
+          ({date: (date || '').trim(), name, en, kind, meaning, quote, tip, color: (color || '').replace(/^'/, '').trim()}))
+        .filter(r => /^\d{4}-\d{2}-\d{2}$/.test(r.date) && r.name && r.date <= today)
+        .sort((a, b) => a.date < b.date ? -1 : 1);
+      if (!rows.length) return;
+      state.daily = rows;
+      state.offset = 0;
+      renderDaily();
+    } catch (e) { /* 讀不到試算表（未公開或離線）時沿用內建 FLOWERS */ }
   }
 
   const modal = $('#card-modal');
@@ -105,7 +182,7 @@
     g.fillStyle = v('--paper-0') || '#F7F5F1'; g.fillRect(0, 0, W, H);
     const iw = W - P * 2, ih = Math.round(iw * 5 / 4);
     const gr = g.createLinearGradient(0, P, 0, P + ih);
-    gr.addColorStop(0, v('--bamboo-300') || '#B4BDAD'); gr.addColorStop(.6, v('--bamboo-100') || '#DFE2DA'); gr.addColorStop(1, v('--paper-1') || '#EFECE7');
+    gr.addColorStop(0, /^#[0-9a-f]{6}$/i.test(f.color || '') ? f.color : (v('--bamboo-300') || '#B4BDAD')); gr.addColorStop(.6, v('--bamboo-100') || '#DFE2DA'); gr.addColorStop(1, v('--paper-1') || '#EFECE7');
     g.fillStyle = gr; g.fillRect(P, P, iw, ih);
     const img = $('.card__photo img', modal);
     if (f.photo && img.complete && img.naturalWidth) {
@@ -278,9 +355,10 @@
   $('.hero').dataset.layout = CONFIG.heroLayout === 'center' ? 'center' : 'corner';
   $('#journal').hidden = !CONFIG.showSubscribe;
   $$('[data-order-link]').forEach(a => { a.href = CONFIG.orderUrl; });
-  $('[data-bind="todayLabel"]').textContent = flowerFor(0).dateLabel;
+  $('[data-bind="todayLabel"]').textContent = dateLabelOf(new Date());
 
   renderDaily();
+  loadDailySheet();
   renderOccasions();
   renderGifts();
   initFinder();
@@ -293,15 +371,15 @@
     if (!act) return;
     const a = act.dataset.action;
     if (a === 'close') closeCard();
-    else if (a === 'prev') { state.offset--; renderDaily(); }
-    else if (a === 'next') { state.offset++; renderDaily(); }
+    else if (a === 'prev') step(-1);
+    else if (a === 'next') step(1);
     else if (a === 'download') downloadCard();
   });
   document.addEventListener('keydown', e => {
     if (modal.hidden) return;
     if (e.key === 'Escape') closeCard();
-    else if (e.key === 'ArrowLeft') { state.offset--; renderDaily(); }
-    else if (e.key === 'ArrowRight') { state.offset++; renderDaily(); }
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
   });
 
   $('#occasions').addEventListener('click', e => {
