@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>訂購需求 · 花日和 Hanabiyori</title>
+<meta name="description" content="填寫花禮訂購需求，確認花材與金額後再匯款。">
+<link rel="stylesheet" href="assets/tokens/fonts.css">
+<link rel="stylesheet" href="assets/tokens/colors.css">
+<link rel="stylesheet" href="assets/tokens/typography.css">
+<link rel="stylesheet" href="assets/tokens/spacing.css">
+<link rel="stylesheet" href="assets/tokens/effects.css">
+<link rel="stylesheet" href="assets/tokens/base.css">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/order.js" defer></script>
+</head>
+<body>
+<div class="page">
+
+<header class="subhead">
+  <a href="index.html" class="brand"><span class="brand__zh">花日和</span><span class="brand__en">Hanabiyori</span></a>
+  <nav class="subhead__nav">
+    <a href="index.html#report">花海通報</a>
+    <a href="index.html#gifts">花禮推薦</a>
+    <a href="order.html" aria-current="page">訂購需求</a>
+    <a href="pay.html">匯款回報</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="index-label"><span>Step 1</span><span class="index-label__rule"></span><span>Order Request · 訂購需求</span></div>
+    <h1>先說說你想送的花</h1>
+    <p>送出需求後，我們會透過電話或 LINE 和你確認花材與金額；確認後再匯款，並到「匯款回報」填寫帳號後五碼。</p>
+  </div>
+</section>
+
+<section class="form-wrap">
+  <div class="container">
+    <div class="form-grid">
+      <div>
+        <form class="form" id="order-form" novalidate>
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <fieldset class="fieldset">
+            <legend><span>01</span><b>花禮</b></legend>
+            <div class="row">
+              <label class="field"><span>選擇花禮</span>
+                <select name="gift" id="gift-select"><option value="">客製化（不指定）</option></select>
+              </label>
+              <label class="field"><span>預算</span>
+                <select name="budget">
+                  <option value="">依花禮定價</option>
+                  <option>1,500 以下</option><option>1,500–3,000</option><option>3,000 以上</option>
+                </select>
+              </label>
+            </div>
+            <div class="field"><span>用途</span>
+              <div class="choices">
+                <label><input type="radio" name="purpose" value="生日"><span>生日</span></label>
+                <label><input type="radio" name="purpose" value="開幕"><span>開幕</span></label>
+                <label><input type="radio" name="purpose" value="告白"><span>告白</span></label>
+                <label><input type="radio" name="purpose" value="致意"><span>致意</span></label>
+                <label><input type="radio" name="purpose" value="節慶"><span>節慶</span></label>
+                <label><input type="radio" name="purpose" value="婚禮"><span>婚禮</span></label>
+                <label><input type="radio" name="purpose" value="其他"><span>其他</span></label>
+              </div>
+            </div>
+            <div class="field"><span>造型</span>
+              <div class="choices">
+                <label><input type="radio" name="style" value="花束"><span>花束</span></label>
+                <label><input type="radio" name="style" value="花盒"><span>花盒</span></label>
+                <label><input type="radio" name="style" value="盆花"><span>盆花</span></label>
+                <label><input type="radio" name="style" value="花籃"><span>花籃</span></label>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset custom">
+            <legend><span>02</span><b>客製化需求</b></legend>
+            <label class="field"><span>指定花材 · 花色</span>
+              <input name="flowers" placeholder="例：白色系、想要有繡球與尤加利">
+            </label>
+            <label class="field"><span>其他想法</span>
+              <textarea name="note" placeholder="送給誰、想傳達的心意、參考照片連結…"></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend><span>03</span><b>到貨時間與方式</b></legend>
+            <div class="row">
+              <label class="field"><span>到貨日期 <em>*</em></span><input type="date" name="date" required></label>
+              <label class="field"><span>時段</span>
+                <select name="slot"><option>上午 10–12</option><option>下午 13–17</option><option>晚上 18–20</option></select>
+              </label>
+            </div>
+            <div class="field"><span>交付方式 <em>*</em></span>
+              <div class="choices">
+                <label><input type="radio" name="delivery" value="門市自取" checked><span>門市自取</span></label>
+                <label><input type="radio" name="delivery" value="專人外送"><span>專人外送</span></label>
+                <label><input type="radio" name="delivery" value="宅配"><span>宅配</span></label>
+              </div>
+              <small>花禮需 2–3 天備花，請預留時間。</small>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend><span>04</span><b>收件資訊</b></legend>
+            <div class="row">
+              <label class="field"><span>收件人</span><input name="recipient" autocomplete="off"></label>
+              <label class="field"><span>收件人電話</span><input name="recipientPhone" type="tel" inputmode="tel"></label>
+            </div>
+            <label class="field" id="address-field"><span>地址</span><input name="address" autocomplete="street-address"></label>
+            <label class="field"><span>卡片留言</span><textarea name="cardMessage" placeholder="想寫在小卡上的話（選填）"></textarea></label>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend><span>05</span><b>你的聯絡方式</b></legend>
+            <div class="row">
+              <label class="field"><span>姓名 <em>*</em></span><input name="name" required autocomplete="name"></label>
+              <label class="field"><span>電話 <em>*</em></span><input name="phone" type="tel" inputmode="tel" required autocomplete="tel"></label>
+            </div>
+            <div class="row">
+              <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email"><small>填寫可收到確認信</small></label>
+              <label class="field"><span>LINE ID</span><input name="line"></label>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary">送出需求</button>
+            <span class="form-msg" role="alert"></span>
+          </div>
+        </form>
+
+        <div class="done" id="order-done" hidden>
+          <span class="label">Request Received · 已收到需求</span>
+          <span>你的訂單編號</span>
+          <span class="done__id" id="done-id"></span>
+          <ol>
+            <li>請記下訂單編號，我們會在 1 個工作天內聯絡你確認花材與金額。</li>
+            <li>確認後依提供的帳號匯款。</li>
+            <li>匯款後到 <a href="pay.html">匯款回報</a> 填寫訂單編號與帳號後五碼。</li>
+          </ol>
+        </div>
+      </div>
+
+      <aside class="aside">
+        <div class="pick" id="pick" hidden>
+          <div class="pick__photo"><img id="pick-img" alt=""></div>
+          <div class="pick__body">
+            <span class="label" id="pick-tag" style="color:var(--ink-3)"></span>
+            <span class="pick__name" id="pick-name"></span>
+            <span class="pick__desc" id="pick-desc"></span>
+            <span class="pick__price" id="pick-price"></span>
+          </div>
+        </div>
+        <ol class="steps">
+          <li><b>送出需求</b>取得訂單編號</li>
+          <li><b>確認花材與金額</b>我們以電話或 LINE 聯絡你</li>
+          <li><b>匯款</b>依提供的帳號匯款</li>
+          <li><b>回報後五碼</b>到匯款回報頁填寫</li>
+          <li><b>製作與送達</b>依指定時間交付</li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="notes" id="notes">
+  <div class="container" style="gap:16px">
+    <span class="label">Notes · 訂購須知</span>
+    <ul>
+      <li>花材依季節與市場供貨調整，會以相近花色與風格替代。</li>
+      <li>匯款確認後才開始備花；收到匯款回報後會再通知你。</li>
+      <li>專人外送與宅配的範圍與運費，於確認金額時一併告知。</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer footer--slim">
+  <div class="container footer__inner">
+    <div class="footer__bottom label">
+      <span>© 2026 Hanabiyori</span>
+      <span>LINE @hanabiyori · IG @hanabiyori.flower</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

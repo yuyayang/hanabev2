@@ -5,7 +5,7 @@
     heroLayout: 'corner',   // 'corner' | 'center'
     giftCount: 6,           // 3–6
     showSubscribe: true,
-    orderUrl: '#order',     // 訂購系統網址，待提供
+    orderUrl: 'order.html', // 訂購需求表單
     subscribeUrl: '',       // 花誌訂閱表單送出網址，待提供
     // 「花日和｜今日花草」試算表（daily 分頁，由每日排程寫入）；需設為「知道連結的任何人都能檢視」
     dailySheetId: '1nlt5VMJT8ILvayvH9xGhjDgxXVbjhdU1XgJQaoxjBcU'
@@ -37,18 +37,8 @@
     {key:'eucalyptus',name:'尤加利',en:'Eucalyptus',term:'大雪 · Winter',meaning:'恩賜、守護',note:'灰綠的圓葉帶著清涼的香氣，是一整年都在的配角，安靜地讓花更好看。',quote:'當個好配角，也是一種開花。'},
     {key:'camellia',name:'山茶',en:'Camellia',term:'冬至 · Midwinter',meaning:'理想的愛',note:'在最冷的時候開，花落時整朵落下，乾淨俐落。',quote:'冷的季節，也有人在認真地美。'}
   ];
-  // photo：自家照片（assets/img/gifts/*.webp，由 gift-photo-cutout skill 產生）；pos：取景位置；沒有 photo 時改用 img 的 Drive 縮圖
-  const GIFTS = [
-    {id:'g7',name:'華容貴妃',tag:'開幕',occ:['開幕','致意'],desc:'紅白玫瑰、藍繡球、火鶴、小向日葵 · 長盆盆花',price:'',img:'',photo:'assets/img/gifts/g7.webp'},
-    {id:'g1',name:'竹青晨霧',tag:'生日',occ:['生日','致意'],desc:'紫洋桔梗、百合、小菊、狗尾草 · 竹籃',price:'1,880',img:'1WpZGzahLpMLoEOdix8ukW04q4LB4bFF2',photo:'assets/img/gifts/g1.webp'},
-    {id:'g2',name:'櫻與海',tag:'告白',occ:['告白','生日'],desc:'鹿角蕨、常春藤 · 木板壁掛',price:'2,280',img:'1HhAxLmSYU1ch8PvvPqIOBRbWvMbf5N6M',photo:'assets/img/gifts/g2.webp'},
-    {id:'g3',name:'一片楓葉',tag:'開幕',occ:['開幕','節慶'],desc:'燈籠果、白康乃馨、香檳玫瑰、百合 · 盆花',price:'3,600',img:'1NooH9OCVwS-GRkO5T6Y-efEwuO8aTW--',photo:'assets/img/gifts/g3.webp'},
-    {id:'g4',name:'暮色玫瑰',tag:'婚禮',occ:['婚禮','告白'],desc:'奶茶玫瑰、康乃馨、銀葉菊',price:'2,680',img:'1Fcwy11nDDRw2aCyihbD46vdQehbo4po7'},
-    {id:'g5',name:'秋日小盆',tag:'致意',occ:['致意','節慶'],desc:'多肉、苔球 · 盆花',price:'1,280',img:'1U432ic3aT-VVZbOtEP5R3i_J2yzMtsM6'},
-    {id:'g6',name:'白日長亭',tag:'節慶',occ:['節慶','開幕'],desc:'針墊花、藍繡球、綠乒乓菊、蕨葉 · 長盆',price:'1,580',img:'1Bim1yFWUHp1C4S3Fb1oKMc2gK1zcQqZq',photo:'assets/img/gifts/g6.webp',pos:'center 85%'}
-  ];
-  // 首頁只放有自家照片的花禮，每次載入隨機排序
-  const SHOWN_GIFTS = GIFTS.filter(g => g.photo).sort(() => Math.random() - .5);
+  // 花禮資料：data/gifts.json（photo：自家照片；pos：取景位置；沒有 photo 時改用 img 的 Drive 縮圖）
+  const GIFTS_URL = 'data/gifts.json';
   // 花海通報資料由 seasonal-flower-finder 每週更新至 data/reports.json
   const REPORTS_URL = 'data/reports.json';
   // 出發縣市（縣市政府所在地座標）
@@ -67,7 +57,7 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const KINDS = [['all','全部'],['flower','花海'],['scenery','季節景色']];
   // daily：試算表中日期 ≤ 今天的列（舊 → 新）；讀不到時為 null，改用內建 FLOWERS
-  const state = {offset: 0, occ: '全部', spots: [], origin: null, kind: 'all', daily: null};
+  const state = {gifts: [], offset: 0, occ: '全部', spots: [], origin: null, kind: 'all', daily: null};
 
   // ---------- 每日一花 ----------
   const pad2 = n => String(n).padStart(2, '0');
@@ -216,9 +206,9 @@
   }
   function renderGifts() {
     const n = Math.min(6, Math.max(3, CONFIG.giftCount));
-    const list = SHOWN_GIFTS.filter(g => state.occ === '全部' || g.occ.includes(state.occ)).slice(0, n);
+    const list = state.gifts.filter(g => state.occ === '全部' || g.occ.includes(state.occ)).slice(0, n);
     $('#gift-grid').innerHTML = list.map(g => `
-      <a class="gift" href="${esc(CONFIG.orderUrl)}" data-gift="${esc(g.id)}">
+      <a class="gift" href="${esc(CONFIG.orderUrl + '?gift=' + g.id)}" data-gift="${esc(g.id)}">
         <div class="gift__stage">
           <img class="gift__img" src="${esc(g.photo || 'https://drive.google.com/thumbnail?id=' + g.img + '&sz=w1000')}" alt="${esc(g.name)}"${g.pos ? ` style="object-position:${esc(g.pos)}"` : ''} loading="lazy" onerror="this.hidden=true">
         </div>
@@ -360,7 +350,11 @@
   renderDaily();
   loadDailySheet();
   renderOccasions();
-  renderGifts();
+  // 首頁只放有自家照片的花禮，每次載入隨機排序
+  fetch(GIFTS_URL).then(r => r.json()).then(d => {
+    state.gifts = (d.gifts || []).filter(g => g.photo).sort(() => Math.random() - .5);
+    renderGifts();
+  }).catch(() => {});
   initFinder();
   loadReports();
 

@@ -204,3 +204,79 @@ p{margin:0}
   html{scroll-behavior:auto}
   .daily,.gift,.btn{transition:none}
 }
+
+/* ---------- 內頁：頁首 ---------- */
+.subhead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:24px 56px;border-bottom:1px solid var(--line-hair);background:var(--paper-0)}
+.subhead .brand,.subhead .brand:hover{color:var(--ink-1)}
+.subhead__nav{display:flex;gap:28px;flex-wrap:wrap}
+.subhead__nav a{font:300 14px/1 var(--font-serif);letter-spacing:.14em;color:var(--ink-1)}
+.subhead__nav a[aria-current="page"]{color:var(--bamboo-700)}
+.page-hero{padding:72px 56px 40px}
+.page-hero .container{gap:20px}
+.page-hero h1{font:var(--type-h2);letter-spacing:.1em}
+.page-hero p{color:var(--ink-2);max-width:560px}
+
+/* ---------- 表單 ---------- */
+.form-wrap{padding:0 56px 96px}
+.form-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start}
+.form{display:flex;flex-direction:column;gap:28px;margin:0}
+.fieldset{border:1px solid var(--line-hair);background:var(--paper-0);padding:28px 28px 32px;margin:0;display:flex;flex-direction:column;gap:22px;min-width:0}
+.fieldset legend{float:left;width:100%;padding:0;margin-bottom:4px;display:flex;align-items:center;gap:14px;font:400 11px/1.2 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-1)}
+.fieldset legend + *{clear:both}
+.fieldset legend b{font:300 20px/1.3 var(--font-serif);letter-spacing:.1em;text-transform:none}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:22px}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.field>span{font:400 11px/1.2 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.field>span em{font-style:normal;color:var(--leaf-700)}
+.field input,.field select,.field textarea{width:100%;border:0;border-bottom:1px solid var(--ink-4);border-radius:0;background:transparent;padding:8px 0;font:300 16px/1.5 var(--font-serif);color:var(--ink-1);letter-spacing:.04em;outline:0;transition:border-color var(--dur-calm) var(--ease-breeze)}
+.field textarea{resize:vertical;min-height:84px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--bamboo-700)}
+.field small{font-size:12px;color:var(--ink-3)}
+.choices{display:flex;gap:10px;flex-wrap:wrap}
+.choices label{position:relative}
+.choices input{position:absolute;opacity:0;pointer-events:none}
+.choices span{display:inline-flex;padding:7px 16px;border:1px solid var(--line-hair);border-radius:var(--radius-pill);font:300 14px/1.2 var(--font-serif);letter-spacing:.08em;cursor:pointer;transition:background var(--dur-calm) var(--ease-breeze)}
+.choices span:hover{background:var(--paper-2)}
+.choices input:checked+span{background:var(--ink-1);border-color:var(--ink-1);color:var(--paper-0)}
+.choices input:focus-visible+span{outline:2px solid var(--focus-ring);outline-offset:2px}
+.custom{background:var(--leaf-100);border-color:var(--leaf-300)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.form-msg{font-size:14px;color:var(--danger)}
+.form-msg:empty{display:none}
+
+/* 側欄：已選花禮與流程 */
+.aside{position:sticky;top:24px;display:flex;flex-direction:column;gap:20px}
+.pick{background:var(--paper-0);border:1px solid var(--line-hair)}
+.pick__photo{aspect-ratio:1/1;background:var(--grad-mist);overflow:hidden}
+.pick__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.pick__body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px}
+.pick__name{font:300 20px/1.3 var(--font-serif);letter-spacing:.1em}
+.pick__desc{font-size:14px;color:var(--ink-2)}
+.pick__price{font:400 13px/1 var(--font-mono);letter-spacing:.08em;margin-top:6px}
+.steps{list-style:none;margin:0;padding:20px;border:1px solid var(--line-hair);display:flex;flex-direction:column;gap:14px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:28px 1fr;gap:4px 10px;font-size:14px;color:var(--ink-2)}
+.steps li::before{counter-increment:s;content:"0" counter(s);grid-row:span 2;font:400 11px/1.6 var(--font-mono);letter-spacing:.12em;color:var(--bamboo-700)}
+.steps b{font-weight:400;color:var(--ink-1)}
+.notes{padding:0 56px 96px}
+.notes ul{margin:0;padding-left:1.2em;color:var(--ink-2);display:flex;flex-direction:column;gap:8px;font-size:15px}
+
+/* 送出成功 */
+.done{border:1px solid var(--line-hair);background:var(--paper-0);padding:40px;display:flex;flex-direction:column;gap:16px}
+.done[hidden]{display:none}
+.done__id{font:400 28px/1.2 var(--font-mono);letter-spacing:.12em;color:var(--bamboo-700)}
+.done ol{margin:0;padding-left:1.3em;color:var(--ink-2);display:flex;flex-direction:column;gap:6px}
+
+@media (max-width:900px){
+  .form-grid{grid-template-columns:1fr}
+  .aside{position:static;order:-1}
+}
+@media (max-width:640px){
+  .subhead,.page-hero{padding-left:24px;padding-right:24px}
+  .form-wrap,.notes{padding:0 24px 72px}
+  .fieldset{padding:22px 18px 26px}
+}
+.form[hidden],.field[hidden]{display:none}
+.footer--slim{padding:28px 56px}
+.footer--slim .footer__bottom{border-top:0;padding-top:0}
+@media (max-width:640px){.footer--slim{padding:24px}}

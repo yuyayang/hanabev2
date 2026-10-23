@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>匯款回報 · 花日和 Hanabiyori</title>
+<meta name="description" content="匯款後填寫訂單編號與帳號後五碼。">
+<link rel="stylesheet" href="assets/tokens/fonts.css">
+<link rel="stylesheet" href="assets/tokens/colors.css">
+<link rel="stylesheet" href="assets/tokens/typography.css">
+<link rel="stylesheet" href="assets/tokens/spacing.css">
+<link rel="stylesheet" href="assets/tokens/effects.css">
+<link rel="stylesheet" href="assets/tokens/base.css">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/order.js" defer></script>
+</head>
+<body>
+<div class="page">
+
+<header class="subhead">
+  <a href="index.html" class="brand"><span class="brand__zh">花日和</span><span class="brand__en">Hanabiyori</span></a>
+  <nav class="subhead__nav">
+    <a href="index.html#report">花海通報</a>
+    <a href="index.html#gifts">花禮推薦</a>
+    <a href="order.html">訂購需求</a>
+    <a href="pay.html" aria-current="page">匯款回報</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="index-label"><span>Step 2</span><span class="index-label__rule"></span><span>Payment · 匯款回報</span></div>
+    <h1>匯款完成，告訴我們一聲</h1>
+    <p>確認金額並完成匯款後，填寫訂單編號與匯款帳號後五碼，我們對帳後就會開始備花。</p>
+  </div>
+</section>
+
+<section class="form-wrap">
+  <div class="container">
+    <div class="form-grid">
+      <div>
+        <form class="form" id="pay-form" novalidate>
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <fieldset class="fieldset">
+            <legend><span>01</span><b>訂單</b></legend>
+            <div class="row">
+              <label class="field"><span>訂單編號 <em>*</em></span><input name="id" required placeholder="HB-261023-01" autocapitalize="characters"></label>
+              <label class="field"><span>訂購人電話 <em>*</em></span><input name="phone" type="tel" inputmode="tel" required><small>用來核對訂單</small></label>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend><span>02</span><b>匯款資訊</b></legend>
+            <div class="row">
+              <label class="field"><span>匯款帳號後五碼 <em>*</em></span><input name="last5" required inputmode="numeric" maxlength="5" pattern="\d{5}" placeholder="12345"></label>
+              <label class="field"><span>匯款日期</span><input name="payDate" type="date"></label>
+            </div>
+          </fieldset>
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary">送出回報</button>
+            <span class="form-msg" role="alert"></span>
+          </div>
+        </form>
+
+        <div class="done" id="pay-done" hidden>
+          <span class="label">Payment Reported · 已收到回報</span>
+          <span class="done__id" id="done-id"></span>
+          <ol>
+            <li>我們會在對帳後通知你，並開始備花。</li>
+            <li>如需修改，請直接以 LINE 聯絡。</li>
+          </ol>
+        </div>
+      </div>
+      <aside class="aside">
+        <ol class="steps">
+          <li><b>送出需求</b>取得訂單編號</li>
+          <li><b>確認花材與金額</b>我們以電話或 LINE 聯絡你</li>
+          <li><b>匯款</b>依提供的帳號匯款</li>
+          <li><b>回報後五碼</b>就是這一頁</li>
+          <li><b>製作與送達</b>依指定時間交付</li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="footer footer--slim">
+  <div class="container footer__inner">
+    <div class="footer__bottom label">
+      <span>© 2026 Hanabiyori</span>
+      <span>LINE @hanabiyori · IG @hanabiyori.flower</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
