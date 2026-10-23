@@ -1,0 +1,181 @@
+/* 花日和 首頁 — 依 Claude Design「首頁.dc.html」實作，色彩／字型取自 tokens/ */
+*{box-sizing:border-box}
+html{background:var(--surface-page);color:var(--text-body);font:var(--type-body);-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{margin:0;background:var(--paper-1);color:var(--ink-1)}
+a{color:var(--ink-1);text-decoration:none}
+a:hover{color:var(--bamboo-700)}
+::selection{background:var(--bamboo-100)}
+button{font:inherit;color:inherit}
+h1,h2{margin:0;font-weight:300}
+p{margin:0}
+.page{background:var(--paper-1);font:var(--type-body);color:var(--ink-1)}
+.label{font:var(--type-label);letter-spacing:.18em;text-transform:uppercase}
+.container{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+
+/* 空照片位置：霧面漸層底 */
+.photo-slot{position:relative;display:block;aspect-ratio:4/5;background:var(--grad-mist);overflow:hidden}
+.photo-slot>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.photo-slot>img:not([src]),.photo-slot>img[src=""]{display:none}
+
+/* ---------- Buttons (DS Button / IconButton) ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;font:400 14px/1 var(--font-serif);letter-spacing:.12em;border:1px solid transparent;border-radius:var(--radius-pill);cursor:pointer;white-space:nowrap;transition:background var(--dur-calm) var(--ease-breeze),transform var(--dur-quick) var(--ease-breeze)}
+.btn:active{transform:scale(.98)}
+.btn--primary{background:var(--bamboo-700);color:var(--paper-0)}
+.btn--primary:hover{background:var(--bamboo-900);color:var(--paper-0)}
+.btn--ink{background:var(--ink-1);color:var(--paper-0)}
+.btn--ink:hover{background:#000;color:var(--paper-0)}
+.btn--secondary{background:transparent;color:var(--ink-1);border-color:var(--ink-1)}
+.btn--secondary:hover{background:var(--paper-2);color:var(--ink-1)}
+.icon-btn{width:40px;height:40px;display:inline-grid;place-items:center;border-radius:50%;border:1px solid transparent;background:transparent;color:var(--ink-1);cursor:pointer;transition:background var(--dur-calm) var(--ease-breeze)}
+.icon-btn:hover{background:var(--paper-2)}
+.btn:focus-visible,.icon-btn:focus-visible,.tag:focus-visible,.daily:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+/* ---------- 01 主視覺 ---------- */
+.hero{position:relative;height:min(100vh,860px);min-height:600px;overflow:hidden;background:var(--grad-mist)}
+.hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero__shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(42,41,38,.38) 0%,rgba(42,41,38,0) 26%,rgba(42,41,38,0) 55%,rgba(42,41,38,.42) 100%)}
+.hero__grain{position:absolute;inset:0;pointer-events:none;background-image:var(--texture-grain);opacity:.22;mix-blend-mode:multiply}
+.hero__header{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:28px 56px;color:var(--paper-0)}
+.brand{display:flex;align-items:baseline;gap:12px;color:var(--paper-0)}
+.brand:hover{color:var(--paper-0)}
+.brand__zh{font:300 20px/1 var(--font-serif);letter-spacing:.2em}
+.brand__en{font:var(--type-label);letter-spacing:.28em;text-transform:uppercase;opacity:.85}
+.hero__nav{display:flex;gap:32px;flex-wrap:wrap}
+.hero__nav a,.hero__nav a:hover{color:var(--paper-0);font:300 14px/1 var(--font-serif);letter-spacing:.14em}
+
+.hero__title{color:var(--paper-0);pointer-events:none}
+.hero__title .label{letter-spacing:.32em}
+.hero__title--center{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;padding:0 24px}
+.hero__title--center h1{font:300 clamp(56px,9vw,120px)/1 var(--font-serif);letter-spacing:.24em;text-indent:.24em}
+.hero__title--center .hero__en{font:400 clamp(22px,2.6vw,34px)/1 var(--font-display);letter-spacing:.12em}
+.hero__title--corner{position:absolute;left:56px;right:56px;bottom:56px;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.hero__name{display:flex;flex-direction:column;gap:16px}
+.hero__title--corner h1{font:300 clamp(56px,8vw,112px)/1 var(--font-serif);letter-spacing:.2em}
+.hero__title--corner .hero__en{font:400 clamp(22px,2.4vw,32px)/1 var(--font-display);letter-spacing:.1em}
+.hero__meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px;letter-spacing:.24em}
+.hero__scroll{opacity:.85}
+.hero[data-layout="center"] .hero__title--center{display:flex}
+.hero[data-layout="center"] .hero__title--corner{display:none}
+
+/* 每日一花 · 漂浮小卡 */
+.daily{position:absolute;top:120px;right:56px;z-index:3;width:208px;cursor:pointer;background:var(--paper-0);border:0;padding:10px 10px 14px;text-align:left;box-shadow:var(--shadow-float);transform:rotate(2deg);transition:transform 320ms var(--ease-breeze),box-shadow 320ms var(--ease-breeze);display:flex;flex-direction:column;gap:10px}
+.daily:hover{transform:rotate(0deg) translateY(-4px)}
+.daily__no{position:absolute;left:8px;top:8px;font:var(--type-label);font-size:10px;letter-spacing:.18em;background:var(--veil);padding:4px 7px}
+.daily__head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px}
+.daily__name{font:300 18px/1.2 var(--font-serif);letter-spacing:.14em}
+.daily__short{font:var(--type-label);font-size:10px;letter-spacing:.16em;color:var(--ink-3)}
+.daily__quote{padding:0 2px;font:300 13px/1.6 var(--font-serif);letter-spacing:.08em;color:var(--ink-2)}
+.daily__cta{padding:8px 2px 0;border-top:1px solid var(--line-hair);font:var(--type-label);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--bamboo-700)}
+
+/* 每日小卡 · 放大 */
+.card-modal{position:fixed;inset:0;z-index:50;background:var(--scrim);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow:auto}
+.card-modal[hidden]{display:none}
+.card-modal__inner{margin:auto;display:flex;flex-direction:column;align-items:center;gap:20px}
+.card{width:min(380px,86vw,calc((100vh - 160px) * 0.62));background:var(--paper-0);padding:18px 18px 26px;box-shadow:var(--shadow-float);display:flex;flex-direction:column;gap:18px}
+.card__term{position:absolute;left:12px;top:12px;font:var(--type-label);letter-spacing:.18em;text-transform:uppercase;background:var(--veil);padding:5px 9px}
+.card__head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.card__names{display:flex;align-items:baseline;gap:10px}
+.card__name{font:300 30px/1.1 var(--font-serif);letter-spacing:.14em}
+.card__en{font:400 16px/1 var(--font-display);letter-spacing:.06em;color:var(--ink-2)}
+.card__meaning{font:var(--type-label);letter-spacing:.16em;color:var(--ink-3)}
+.card__quote{font:300 19px/1.7 var(--font-serif);letter-spacing:.1em;text-wrap:pretty}
+.card__foot{display:flex;justify-content:space-between;gap:12px;padding-top:12px;border-top:1px solid var(--line-hair);font:var(--type-label);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.card-modal__actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;white-space:nowrap}
+.card-modal__actions .icon-btn{color:var(--ink-1)}
+.card-modal__msg{font-size:13px;letter-spacing:.1em;color:var(--paper-0);min-height:1em}
+.card-modal__msg:empty{display:none}
+
+/* ---------- 共用 Section ---------- */
+.section{padding:96px 56px;border-bottom:1px solid var(--line-hair)}
+.section--card{background:var(--paper-0)}
+.section__head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.section__intro{display:flex;flex-direction:column;gap:20px}
+.section__intro h2{font:var(--type-h2);letter-spacing:.1em}
+.section__intro p{color:var(--ink-2);max-width:480px}
+.section__actions{display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0;white-space:nowrap}
+.index-label{display:flex;align-items:center;gap:14px;font:400 11px/1.2 var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-1)}
+.index-label__rule{width:96px;height:1px;background:currentColor;flex:none}
+
+/* ---------- 02 花禮推薦 ---------- */
+.tags{display:flex;gap:10px;flex-wrap:wrap;white-space:nowrap}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--line-hair);background:transparent;color:var(--ink-1);border-radius:var(--radius-pill);font:300 13px/1.2 var(--font-serif);letter-spacing:.08em;cursor:pointer;transition:background var(--dur-calm) var(--ease-breeze)}
+.tag:hover{background:var(--paper-2)}
+.tag[aria-pressed="true"]{border-color:var(--ink-1);background:var(--ink-1);color:var(--paper-0)}
+.gift-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:28px}
+.gift{display:flex;flex-direction:column;background:var(--paper-0);border:1px solid var(--line-hair);border-radius:2px;overflow:hidden;color:var(--ink-1);transition:transform 320ms var(--ease-breeze),box-shadow 320ms var(--ease-breeze)}
+.gift:hover{transform:translateY(-2px);box-shadow:var(--shadow-soft);color:var(--ink-1)}
+.gift__stage{position:relative;aspect-ratio:4/5;background:var(--grad-mist);overflow:hidden}
+.gift__grain{position:absolute;inset:0;pointer-events:none;background-image:var(--texture-grain);opacity:.35;mix-blend-mode:multiply}
+.gift__shadow{position:absolute;left:18%;right:18%;bottom:7%;height:5%;border-radius:50%;background:var(--ink-1);opacity:.12;filter:blur(10px);pointer-events:none}
+.gift__img{position:absolute;inset:8% 10% 6%;width:80%;height:86%;object-fit:contain}
+.gift__img[hidden]{display:none}
+.gift__body{padding:20px 20px 0;display:flex;flex-direction:column;gap:8px}
+.gift__tag{color:var(--ink-3)}
+.gift__name{font:300 20px/1.3 var(--font-serif);letter-spacing:.1em}
+.gift__desc{font-size:14px;color:var(--ink-2)}
+.gift__foot{margin:16px 20px 0;padding:14px 0 18px;border-top:1px solid var(--line-hair);display:flex;justify-content:space-between;align-items:center}
+.gift__price{font:400 13px/1 var(--font-mono);letter-spacing:.08em}
+.gift__order{font-size:13px;color:var(--bamboo-700);letter-spacing:.1em}
+
+/* ---------- 03 花海通報 ---------- */
+.report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:28px}
+.report{display:flex;flex-direction:column;background:var(--paper-1);border:1px solid var(--line-hair);border-radius:2px;overflow:hidden}
+.report__head{padding:22px 22px 4px;display:flex;align-items:center;gap:16px}
+.report__thumb{position:relative;flex:none;width:64px;height:64px;background:var(--paper-2);overflow:hidden}
+.report__thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.report__titles{display:flex;flex-direction:column;gap:6px;min-width:0}
+.report__meta{color:var(--ink-3)}
+.report__place{font:300 20px/1.3 var(--font-serif);letter-spacing:.1em}
+.report__rows{padding:8px 22px 0;display:flex;flex-direction:column}
+.report__row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line-hair);font-size:14px}
+.report__row:last-child{border-bottom:0}
+.report__row>span:first-child{color:var(--ink-3)}
+.report__status{display:flex;align-items:center;gap:6px}
+.report__dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--bamboo-700)}
+.report__dot.is-on{background:var(--bamboo-700)}
+.report__status-text{margin-left:6px;color:var(--ink-1)}
+.report__foot{margin-top:auto;padding:14px 22px 18px;border-top:1px solid var(--line-hair);display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;letter-spacing:.08em}
+.report__map,.report__map:hover{color:var(--sea-700)}
+.report__gift,.report__gift:hover{color:var(--ink-2)}
+
+.journal{position:relative;overflow:hidden;background:var(--grad-tide);padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.journal[hidden]{display:none}
+.journal__grain{position:absolute;inset:0;pointer-events:none;background-image:var(--texture-grain);opacity:.3;mix-blend-mode:multiply}
+.journal__text{position:relative;display:flex;flex-direction:column;gap:10px}
+.journal__text .label{letter-spacing:.2em;color:var(--ink-1)}
+.journal__title{font:300 26px/1.4 var(--font-serif);letter-spacing:.1em}
+.journal__note{font-size:14px;color:var(--ink-1)}
+.journal__form{position:relative;display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;background:var(--veil);padding:16px 20px;margin:0}
+.input{display:flex;align-items:center;gap:10px;width:260px;max-width:100%;border-bottom:1px solid var(--ink-4);padding:8px 0;transition:border-color var(--dur-calm) var(--ease-breeze)}
+.input:focus-within{border-color:var(--bamboo-700)}
+.input input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:300 16px/1.4 var(--font-serif);color:var(--ink-1);letter-spacing:.04em}
+
+/* ---------- 頁尾 ---------- */
+.footer{background:var(--ink-1);color:var(--paper-1);padding:72px 56px 32px}
+.footer__inner{gap:56px}
+.footer__cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:40px}
+.footer__col{display:flex;flex-direction:column;gap:14px}
+.footer__col a,.footer__col a:hover{color:var(--paper-1);font-size:14px;letter-spacing:.1em}
+.footer__brand{font:300 24px/1 var(--font-serif);letter-spacing:.22em}
+.footer__brand-en{font:400 18px/1 var(--font-display);letter-spacing:.1em;color:var(--ink-4)}
+.footer__desc{margin:6px 0 0;font-size:14px;color:var(--ink-4);max-width:240px}
+.footer__label{letter-spacing:.2em;color:var(--ink-4)}
+.footer__contact>span:not(.label){font-size:14px;letter-spacing:.06em}
+.footer__contact .footer__muted{color:var(--ink-4)}
+.footer__bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(239,236,231,.16);color:var(--ink-4)}
+
+/* ---------- 手機版（設計稿未定義，僅縮小邊距並避免小卡蓋住標題） ---------- */
+@media (max-width:640px){
+  .hero__header{padding:20px 24px}
+  .hero__nav{gap:18px}
+  .hero__title--corner{left:24px;right:24px;bottom:40px}
+  .daily{top:auto;bottom:220px;right:24px;width:150px}
+  .daily__quote{display:none}
+  .section{padding:72px 24px}
+  .journal{padding:32px 24px}
+  .footer{padding:56px 24px 28px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .daily,.gift,.btn{transition:none}
+}

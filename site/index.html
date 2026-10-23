@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>花日和 Hanabiyori</title>
+<meta name="description" content="跟著季節看花、選花、送花。每日一花、花禮推薦、花海通報。">
+<link rel="stylesheet" href="assets/tokens/fonts.css">
+<link rel="stylesheet" href="assets/tokens/colors.css">
+<link rel="stylesheet" href="assets/tokens/typography.css">
+<link rel="stylesheet" href="assets/tokens/spacing.css">
+<link rel="stylesheet" href="assets/tokens/effects.css">
+<link rel="stylesheet" href="assets/tokens/base.css">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/main.js" defer></script>
+</head>
+<body id="top">
+<div class="page">
+
+<!-- 01 主視覺 -->
+<section class="hero" data-layout="corner">
+  <img class="hero__img" src="assets/img/hero-main.webp" alt="">
+  <div class="hero__shade"></div>
+  <div class="hero__grain"></div>
+
+  <header class="hero__header">
+    <a href="#top" class="brand">
+      <span class="brand__zh">花日和</span>
+      <span class="brand__en">Hanabiyori</span>
+    </a>
+    <nav class="hero__nav">
+      <a href="#map">花海地圖</a>
+      <a href="#report">花海通報</a>
+      <a href="#journal">花誌訂閱</a>
+      <a href="#gifts">花禮推薦</a>
+      <a href="#about">關於我</a>
+    </nav>
+  </header>
+
+  <div class="hero__title hero__title--center">
+    <span class="label">Flowers · Seasons · Slow Days</span>
+    <h1>花日和</h1>
+    <span class="hero__en">Hanabiyori</span>
+  </div>
+  <div class="hero__title hero__title--corner">
+    <div class="hero__name">
+      <span class="label">No.01 ———— Flowers · Seasons</span>
+      <h1>花日和</h1>
+      <span class="hero__en">Hanabiyori</span>
+    </div>
+    <div class="hero__meta label">
+      <span data-bind="todayLabel"></span>
+      <span class="hero__scroll">Scroll ↓</span>
+    </div>
+  </div>
+
+  <!-- 每日一花：漂浮小卡 -->
+  <button type="button" id="daily" class="daily" title="點開每日小卡">
+    <span class="daily__photo photo-slot">
+      <img data-bind-img="flower" alt="">
+      <span class="daily__no">NO.<span data-bind="no"></span></span>
+    </span>
+    <span class="daily__head">
+      <span class="daily__name" data-bind="name"></span>
+      <span class="daily__short" data-bind="short"></span>
+    </span>
+    <span class="daily__quote" data-bind="quote"></span>
+    <span class="daily__cta">Daily Card · 點開收藏 ↗</span>
+  </button>
+</section>
+
+<!-- 每日小卡：放大 -->
+<div class="card-modal" id="card-modal" hidden>
+  <div class="card-modal__inner" role="dialog" aria-modal="true" aria-label="每日一花小卡">
+    <div class="card">
+      <div class="card__photo photo-slot">
+        <img data-bind-img="flower" alt="">
+        <span class="card__term" data-bind="term"></span>
+      </div>
+      <div class="card__head">
+        <div class="card__names">
+          <span class="card__name" data-bind="name"></span>
+          <span class="card__en" data-bind="en"></span>
+        </div>
+        <span class="card__meaning">花語 <span data-bind="meaning"></span></span>
+      </div>
+      <span class="card__quote" data-bind="quote"></span>
+      <div class="card__foot">
+        <span data-bind="dateLabel"></span><span>花日和 · NO.<span data-bind="no"></span></span>
+      </div>
+    </div>
+    <div class="card-modal__actions">
+      <button type="button" class="icon-btn" data-action="prev" aria-label="前一天" title="前一天">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      </button>
+      <button type="button" class="btn btn--primary" data-action="download">下載紀念小卡</button>
+      <button type="button" class="icon-btn" data-action="next" aria-label="後一天" title="後一天">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      <button type="button" class="icon-btn" data-action="close" aria-label="關閉" title="關閉">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <span class="card-modal__msg" aria-live="polite"></span>
+  </div>
+</div>
+
+<!-- 02 花禮推薦 -->
+<section id="gifts" class="section">
+  <div class="container">
+    <div class="section__head">
+      <div class="section__intro">
+        <div class="index-label"><span>No.02</span><span class="index-label__rule"></span><span>Seasonal Gifts · 花禮推薦</span></div>
+        <h2>這個季節，送一束剛好的花</h2>
+        <p>依心意挑選，點進花禮即可前往訂購系統，選日期、時段與送達方式。</p>
+      </div>
+      <div class="section__actions"><a class="btn btn--primary" data-order-link href="#order">前往訂購系統 →</a></div>
+    </div>
+    <div class="tags" id="occasions"></div>
+    <div class="gift-grid" id="gift-grid"></div>
+  </div>
+</section>
+
+<!-- 03 花海通報 -->
+<section id="report" class="section section--card">
+  <div class="container">
+    <div class="section__head">
+      <div class="section__intro">
+        <div class="index-label"><span>No.03</span><span class="index-label__rule"></span><span>Weekly Bloom Report · 花海通報</span></div>
+        <h2>本週，正在開的花海</h2>
+        <p>每週四更新。花況、最佳時段與交通，一次看完。</p>
+      </div>
+      <div class="section__actions">
+        <a class="btn btn--secondary" href="#map">花海地圖</a>
+        <a class="btn btn--ink" href="#report">所有通報 →</a>
+      </div>
+    </div>
+    <div class="report-grid" id="report-grid"></div>
+
+    <div id="journal" class="journal">
+      <div class="journal__grain"></div>
+      <div class="journal__text">
+        <span class="label">Flower Journal · 花誌</span>
+        <span class="journal__title">每週四，收一封花海通報</span>
+        <span class="journal__note">隨時可取消。</span>
+      </div>
+      <form class="journal__form" id="journal-form">
+        <label class="input"><input type="email" name="email" placeholder="your@email.com" required aria-label="Email"></label>
+        <button type="submit" class="btn btn--primary">訂閱</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- 頁尾 -->
+<footer id="about" class="footer">
+  <div class="container footer__inner">
+    <div class="footer__cols">
+      <div class="footer__col">
+        <span class="footer__brand">花日和</span>
+        <span class="footer__brand-en">Hanabiyori</span>
+        <p class="footer__desc">跟著季節看花、選花、送花。</p>
+      </div>
+      <div class="footer__col">
+        <span class="label footer__label">Explore</span>
+        <a href="#map">花海地圖</a>
+        <a href="#report">花海通報</a>
+        <a href="#journal">花誌訂閱</a>
+        <a href="#gifts">花禮推薦</a>
+      </div>
+      <div class="footer__col">
+        <span class="label footer__label">About</span>
+        <a href="#about">關於我</a>
+        <a href="#order">訂購須知</a>
+        <a href="#order">配送範圍</a>
+      </div>
+      <div class="footer__col footer__contact">
+        <span class="label footer__label">Contact</span>
+        <span>LINE @hanabiyori</span>
+        <span>IG @hanabiyori.flower</span>
+        <span class="footer__muted">工作室地址 · 預約制</span>
+      </div>
+    </div>
+    <div class="footer__bottom label">
+      <span>© 2026 Hanabiyori</span>
+      <span>Flowers read like weather</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

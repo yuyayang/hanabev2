@@ -1,0 +1,29 @@
+:root{
+/* Paper & ink */
+--paper-0:#F7F5F1;--paper-1:#EFECE7;--paper-2:#E6E2DB;--paper-3:#D8D3CB;
+--ink-1:#33322F;--ink-2:#5C5A55;--ink-3:#8A8781;--ink-4:#B5B1AA;
+/* 竹 Bamboo green */
+--bamboo-900:#425244;--bamboo-700:#5D6E58;--bamboo-500:#86957F;--bamboo-300:#B4BDAD;--bamboo-100:#DFE2DA;
+/* 楓 Leaf terracotta */
+--leaf-700:#93705C;--leaf-500:#B08C72;--leaf-300:#CFB6A3;--leaf-100:#EBE1D8;
+/* 櫻 Blush */
+--blush-500:#B7A29D;--blush-300:#D7C9C4;--blush-100:#ECE5E2;
+/* 海 Sea teal */
+--sea-700:#557984;--sea-500:#7395A0;--sea-300:#A9BEC3;--sea-100:#DCE3E5;
+/* 暮 Dusk mauve & denim */
+--mauve-500:#958A8C;--mauve-300:#BBB1B2;--denim-500:#6D788C;--rust-500:#956A5A;
+/* Semantic */
+--success:#5D6E58;--warning:#B08C72;--danger:#956A5A;--info:#557984;
+/* Aliases */
+--surface-page:var(--paper-1);--surface-card:var(--paper-0);--surface-sunken:var(--paper-2);--surface-inverse:var(--ink-1);
+--text-body:var(--ink-1);--text-muted:var(--ink-2);--text-subtle:var(--ink-3);--text-on-inverse:var(--paper-0);
+--line:var(--ink-1);--line-soft:var(--paper-3);--line-hair:rgba(42,41,38,.14);
+--accent:var(--bamboo-700);--accent-hover:var(--bamboo-900);--accent-soft:var(--bamboo-100);
+--accent-warm:var(--leaf-500);--focus-ring:var(--sea-500);
+/* Signature gradients */
+--grad-dawn:linear-gradient(180deg,var(--blush-300) 0%,#CDCFCC 45%,var(--sea-500) 100%);
+--grad-tide:linear-gradient(90deg,var(--blush-100) 0%,var(--sea-300) 55%,var(--sea-700) 100%);
+--grad-dusk:linear-gradient(135deg,var(--denim-500) 0%,var(--mauve-300) 50%,var(--rust-500) 100%);
+--grad-mist:linear-gradient(180deg,var(--bamboo-300) 0%,var(--bamboo-100) 60%,var(--paper-1) 100%);
+--grad-rose:radial-gradient(120% 90% at 20% 10%,#B5999A 0%,var(--mauve-500) 55%,#8C9C9C 100%);
+}
