@@ -46,6 +46,28 @@
       "source": "https://travel.yam.com/article/132580"
     },
     {
+      "id": "tianwei-mum",
+      "place": "彰化田尾 · 菊花田",
+      "flower": "菊花",
+      "region": "中部",
+      "county": "彰化縣",
+      "lat": 23.8925,
+      "lng": 120.5250,
+      "phase": "now",
+      "lv": 2,
+      "status": "花季中",
+      "confirmed": false,
+      "dataDate": "2026-10",
+      "period": "10 月初–12 月底",
+      "best": "傍晚點燈",
+      "traffic": "國道 1 號北斗交流道",
+      "ticket": "免費",
+      "tip": "多為私人花田，請走田埂外、勿進田拍照",
+      "gift": "白日長亭",
+      "img": "",
+      "source": "https://jatraveling.tw/blog/post/64695"
+    },
+    {
       "id": "xinshe",
       "place": "台中新社花海",
       "flower": "花海節",

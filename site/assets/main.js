@@ -165,7 +165,7 @@
   function driveLabel(km) {
     const road = km * 1.25;
     const min = Math.round(road <= 25 ? road / 30 * 60 : 50 + (road - 25) / 95 * 60);
-    if (min < 60) return '約 ' + Math.max(5, Math.round(min / 5) * 5) + ' 分鐘車程';
+    if (min < 55) return '約 ' + Math.max(5, Math.round(min / 5) * 5) + ' 分鐘車程';
     return '約 ' + (Math.round(min / 30) / 2) + ' 小時車程';
   }
   function mapUrl(r) {
@@ -229,8 +229,13 @@
 
   function setOrigin(origin, label) {
     state.origin = origin;
-    const first = state.spots.filter(r => r.phase === 'now').map(r => ({...r, km: distanceKm(origin, r)})).sort((a, b) => a.km - b.km)[0];
-    $('#finder-status').textContent = '從' + label + '出發' + (first ? '，最近的是' + first.place + '（' + driveLabel(first.km) + '）' : '') + '。';
+    const near = phase => state.spots.filter(r => (r.phase === 'now') === (phase === 'now'))
+      .map(r => ({...r, km: distanceKm(origin, r)})).sort((a, b) => a.km - b.km)[0];
+    const now = near('now'), soon = near('soon');
+    let text = '從' + label + '出發';
+    if (now) text += '，本週可賞最近的是' + now.place + '（' + driveLabel(now.km) + '）';
+    if (soon && (!now || soon.km < now.km)) text += '；更近的' + soon.place + '即將登場（' + soon.status + '，' + driveLabel(soon.km) + '）';
+    $('#finder-status').textContent = text + '。';
     renderReports();
   }
 
